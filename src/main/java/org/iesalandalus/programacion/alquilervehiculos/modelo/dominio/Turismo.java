@@ -1,8 +1,13 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Turismo {
+	
+	
+	//DECLARACIÓN
+	
 	private String [] ER_MARCA= {"Seat", "Land Rover", "KIA", "Rolls-Royce", "SsangYong"};
 	private String ER_MATRICULA="[0-9]{4}[a-zA-Z]{3}";
 	private String marca,modelo,matricula;
@@ -103,6 +108,18 @@ public class Turismo {
 	}
 	
 	
+	//METODOS DE CLASE
+	
+	public static Turismo getTurismoConMatricula(String matricula, List<Turismo> coleccionTurismo) {
+		for(Turismo turismo:coleccionTurismo) {
+			if(turismo.getMatricula().equals(matricula)) {
+				return turismo;
+			}
+		}
+		return null;
+	}
+	
+	
 	//EQUALS & HASCODE
 	
 	@Override
@@ -123,5 +140,11 @@ public class Turismo {
 	}
 
 	
+	//TOSTRING
 	
+	@Override
+	public String toString() {
+		return marca + ", " + modelo + ", " + matricula + ", "
+				+ cilindrada;
+	}
 }

@@ -1,10 +1,15 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Cliente {
+	
+	
+	//DECLARACIÓN
+	
 	private String ER_NOMBRE="[a-zA-Z]+[ ]";
 	private String ER_DNI="([0-9]{8})([a-zA-Z])";
 	private String ER_TELEFONO="[0-9]{9}";
@@ -98,7 +103,7 @@ public class Cliente {
 	}
 	
 	
-	//METODO DE CLASE
+	//METODOS DE CLASE
 	
 	private boolean comprobarLetraDni(String dni) {
 		Pattern pat=Pattern.compile(ER_DNI);
@@ -113,6 +118,15 @@ public class Cliente {
 		else {
 			return false;
 		}
+	}
+	
+	public static Cliente getClienteConDni(String dni, List<Cliente> coleccionClientes) {
+		for(Cliente cliente : coleccionClientes) {
+			if(!cliente.getDni().equals(dni)) {
+				return cliente;
+			}
+		}
+		return null;
 	}
 	
 	
@@ -135,6 +149,9 @@ public class Cliente {
 		return Objects.equals(dni, other.dni);
 	}
 
+	
+	//TOSTRING
+	
 	@Override
 	public String toString() {
 		return nombre + ", " + dni + ", " + telefono + ".";
