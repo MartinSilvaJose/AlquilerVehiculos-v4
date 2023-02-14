@@ -2,6 +2,7 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Turismo {
 	
@@ -110,7 +111,7 @@ public class Turismo {
 	
 	//METODOS DE CLASE
 	
-	public static Turismo getTurismoConMatricula(String matricula, List<Turismo> coleccionTurismo) {
+	public static Turismo getTurismoConMatricula(String matricula, Set<Turismo> coleccionTurismo) {
 		for(Turismo turismo:coleccionTurismo) {
 			if(turismo.getMatricula().equals(matricula)) {
 				return turismo;

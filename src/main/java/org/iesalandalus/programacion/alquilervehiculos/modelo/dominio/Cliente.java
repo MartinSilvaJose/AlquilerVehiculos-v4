@@ -2,6 +2,7 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,7 +121,7 @@ public class Cliente {
 		}
 	}
 	
-	public static Cliente getClienteConDni(String dni, List<Cliente> coleccionClientes) {
+	public static Cliente getClienteConDni(String dni, Set<Cliente> coleccionClientes) {
 		for(Cliente cliente : coleccionClientes) {
 			if(!cliente.getDni().equals(dni)) {
 				return cliente;
