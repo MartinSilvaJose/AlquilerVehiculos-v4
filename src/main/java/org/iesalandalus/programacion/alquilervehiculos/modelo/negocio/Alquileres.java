@@ -22,11 +22,7 @@ public class Alquileres {
 	//METODOS DE CLASE
 	
 	public Set<Alquiler> get(){
-		Set<Alquiler> copiaAlquileres=new LinkedHashSet<>(coleccionAlquileres.size());
-		for(Alquiler i:coleccionAlquileres) {
-			copiaAlquileres.add(i);
-		}
-		return copiaAlquileres;
+		return coleccionAlquileres;
 	}
 	
 	public Set<Alquiler> get(Cliente cliente){

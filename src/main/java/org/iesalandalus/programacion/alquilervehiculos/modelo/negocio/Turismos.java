@@ -22,11 +22,7 @@ public class Turismos {
 	//METODOS DE CLASE
 	
 	public Set<Turismo> get(){
-		Set<Turismo> copiaTurismos=new LinkedHashSet<>(coleccionTurismos.size());
-		for(Turismo i:coleccionTurismos) {
-			copiaTurismos.add(i);
-		}
-		return copiaTurismos;
+		return coleccionTurismos;
 	}
 	
 	public int getCantidad() {

@@ -22,11 +22,7 @@ public class Clientes {
 	//METODOS DE CLASE
 	
 	public Set<Cliente> get() {
-		Set<Cliente> copiaClientes = new LinkedHashSet<>(coleccionClientes.size());
-		for(Cliente i:coleccionClientes) {
-			copiaClientes.add(i);
-		}
-		return copiaClientes;
+		return coleccionClientes;
 	}
 	
 	public int getCantidad() {
