@@ -9,7 +9,7 @@ public class Turismos {
 	
 	//DECLARACION
 	
-	public Set<Turismo> coleccionTurismos;
+	private Set<Turismo> coleccionTurismos;
 	
 	
 	//CONSTRUCTORES

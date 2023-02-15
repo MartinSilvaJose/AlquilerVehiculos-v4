@@ -9,7 +9,7 @@ public class Clientes {
 	
 	//DECLARACION
 	
-	public Set<Cliente> coleccionClientes;
+	private Set<Cliente> coleccionClientes;
 	
 	
 	//CONSTRUCTORES
@@ -30,8 +30,8 @@ public class Clientes {
 	}
 	
 	public int getCantidad() {
-		int cantidad=coleccionClientes.size();
-		return cantidad;
+		return coleccionClientes.size();
+ 
 	}
 	
 	public void insertar(Cliente cliente) {
