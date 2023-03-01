@@ -1,7 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
@@ -15,6 +15,9 @@ public class Modelo {
 	private Alquileres alquileres;
 	private Turismos turismos;
 	
+	public Modelo(){
+		
+	}
 	
 	//COMENZAR & TERMINAR
 	
@@ -35,24 +38,24 @@ public class Modelo {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: no puedes insertar un cliente nulo.");
 		}
-		cliente=new Cliente(cliente);
-		clientes.insertar(cliente);
+		
+		clientes.insertar(cliente=new Cliente(cliente));
 	}
 	
 	public void insertar(Turismo turismo) {
 		if(turismo==null) {
 			throw new NullPointerException("ERROR: no puedes insertar un turismo nulo.");
 		}
-		turismo=new Turismo(turismo);
-		turismos.insertar(turismo);
+	
+		turismos.insertar(turismo=new Turismo(turismo));
 	}
 	
 	public void insertar(Alquiler alquiler) {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR: no puedes insertar un alquiler nulo.");
 		}
-		alquiler=new Alquiler(alquiler);
-		alquileres.insertar(alquiler);
+		
+		alquileres.insertar(alquiler=new Alquiler(alquiler));
 	}
 	
 	
@@ -62,25 +65,23 @@ public class Modelo {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: no puedes buscar un cliente nulo.");
 		}
-		cliente=new Cliente(cliente);
-		clientes.buscar(cliente);
-		return cliente;
+		
+		cliente=clientes.buscar(cliente);
+		return cliente=new Cliente(cliente);
 	}
 	
 	public Turismo buscar(Turismo turismo) {
 		if(turismo==null) {
 			throw new NullPointerException("ERROR: no puedes buscar un turismo nulo.");
 		}
-		turismo=new Turismo(turismo);
-		turismos.buscar(turismo);
+		turismo=turismos.buscar(turismo=new Turismo(turismo));
 		return turismo;
 	}
 	public Alquiler buscar(Alquiler alquiler) {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR: no puedes buscar un alquiler nulo.");
 		}
-		alquiler=new Alquiler(alquiler);
-		alquileres.buscar(alquiler);
+		alquiler=new Alquiler(alquileres.buscar(alquiler=new Alquiler(alquiler)));
 		return alquiler;
 	}
 	
@@ -99,10 +100,18 @@ public class Modelo {
 	//BORRAR
 	
 	public void borrar(Cliente cliente) {
+		List<Alquiler> alquilerPorCliente=alquileres.get(cliente);
+		for(Alquiler i:alquilerPorCliente) {
+			alquilerPorCliente.remove(i);
+		}
 		clientes.borrar(cliente);
 	}
 	
 	public void borrar(Turismo turismo) {
+		List<Alquiler> alquilerPorTurismo=alquileres.get(turismo);
+		for(Alquiler i:alquilerPorTurismo) {
+			alquilerPorTurismo.remove(i);
+		}
 		turismos.borrar(turismo);
 	}
 	
@@ -111,29 +120,32 @@ public class Modelo {
 	}
 	
 	
-	//get
+	//GET
 	
-	public Set<Cliente> getClientes(){
-		Set<Cliente> copiaClientes = new LinkedHashSet<>(clientes.get().size());
-		for(Cliente i:clientes.get()) {
-			copiaClientes.add(i);
-		}
+	public List<Cliente> getClientes(){
+		List<Cliente> copiaClientes = new ArrayList<>(clientes.get());
 		return copiaClientes;
+		
 	}
 	
-	public Set<Turismo> getTurismos(){
-		Set<Turismo> copiaTurismos=new LinkedHashSet<>(turismos.get().size());
-		for(Turismo i:turismos.get()) {
-			copiaTurismos.add(i);
-		}
+	public List<Turismo> getTurismos(){
+		List<Turismo> copiaTurismos=new ArrayList<>(turismos.get());
 		return copiaTurismos;
 	}
 	
-	public Set<Alquiler> getAlquileres(){
-		Set<Alquiler> copiaAlquileres=new LinkedHashSet<>(alquileres.get().size());
-		for(Alquiler i:alquileres.get()) {
-			copiaAlquileres.add(i);
-		}
+	public List<Alquiler> getAlquileres(){
+		List<Alquiler> copiaAlquileres=new ArrayList<>(alquileres.get());
 		return copiaAlquileres;
+	}
+	
+	//GET CON PARAMETROS
+	public List<Alquiler> getAlquileres(Cliente cliente){
+		List<Alquiler> copiaAlquileresPorCliente=new ArrayList<>(alquileres.get(cliente));
+		return copiaAlquileresPorCliente;
+	}
+	
+	public List<Alquiler> getAlquileres(Turismo turismo){
+		List<Alquiler> copiaAlquileresPorTurismo=new ArrayList<>(alquileres.get(turismo));
+		return copiaAlquileresPorTurismo;
 	}
 }

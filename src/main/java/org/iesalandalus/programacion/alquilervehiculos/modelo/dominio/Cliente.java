@@ -1,8 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +9,7 @@ public class Cliente {
 	
 	//DECLARACIÓN
 	
-	private String ER_NOMBRE="[a-zA-Z]+[ ]";
+	private String ER_NOMBRE="[a-zA-Z ]+";
 	private String ER_DNI="([0-9]{8})([a-zA-Z])";
 	private String ER_TELEFONO="[0-9]{9}";
 	private String nombre,dni,telefono;
@@ -21,14 +19,19 @@ public class Cliente {
 	
 	public Cliente(String nombre,String dni,String telefono) {
 		setNombre(nombre);
-		setTelefono(telefono);
 		setDni(dni);
+		setTelefono(telefono);
+
+		
 	}
 	
 	public Cliente(Cliente c) {
-		setNombre(c.getNombre());
-		setTelefono(c.getTelefono());
-		setDni(c.getDni());
+		if(c==null) {
+			throw new NullPointerException("ERROR: No es posible copiar un cliente nulo.");
+		}
+		setNombre(c.nombre);
+		setTelefono(c.telefono);
+		setDni(c.dni);
 	}
 	
 	
@@ -41,18 +44,14 @@ public class Cliente {
 		if(nombre==null) {
 			throw new NullPointerException("ERROR: El nombre no puede ser nulo.");
 		}
-		if(nombre.trim().isEmpty()) {
-			throw new IllegalArgumentException("ERROR: El nombre no puede estar vacio.");
-		}
 		if(!nombre.matches(ER_NOMBRE)) {
-			throw new IllegalArgumentException("ERROR: El nombre no cumple el formato deseado, debe de empezar por una letra del abecedario");
+			throw new IllegalArgumentException("ERROR: El nombre no tiene un formato válido.");
 		}
 		
 		String [] palabras = nombre.trim().split("\\s");
-		for(int i=0;i<nombre.length();i++) {
-			String palabra=palabras[i].trim();
-			palabra=palabra.toUpperCase().charAt(0)+"";
-			nombre=palabra+" ";
+		for(String i:palabras) {
+			i=i.trim().toUpperCase().charAt(0)+"";
+			nombre=i+" ";
 		}
 		this.nombre = nombre;
 	}
@@ -70,14 +69,11 @@ public class Cliente {
 		if(dni==null) {
 			throw new NullPointerException("ERROR: El DNI no puede ser nulo.");
 		}
-		if(dni.trim().isEmpty()) {
-			throw new IllegalArgumentException("ERROR: El DNI no puede estar vacio.");
-		}
-		if(dni.matches(ER_DNI)) {
-			throw new IllegalArgumentException("ERROR: El DNI no cumple el formato deseado.");
+		if(!dni.matches(ER_DNI)) {
+			throw new IllegalArgumentException("ERROR: El DNI no tiene un formato válido.");
 		}
 		if(!comprobarLetraDni(dni)) {
-			throw new IllegalArgumentException("ERROR: El DNI no es válido.");
+			throw new IllegalArgumentException("ERROR: La letra del DNI no es correcta.");
 		}
 
 		this.dni = dni;
@@ -94,11 +90,8 @@ public class Cliente {
 		if(telefono==null) {
 			throw new NullPointerException("ERROR: El teléfono no puede ser nulo.");
 		}
-		if(telefono.trim().isEmpty()) {
-			throw new IllegalArgumentException("ERROR: El teléfono no puede estar vacio.");
-		}
-		if(telefono.matches(ER_TELEFONO)) {
-			throw new IllegalArgumentException("ERROR: El teléfono no cumple el formato deseado.");
+		if(!telefono.matches(ER_TELEFONO)) {
+			throw new IllegalArgumentException("ERROR: El teléfono no tiene un formato válido.");
 		}
 		this.telefono = telefono;
 	}
@@ -107,9 +100,18 @@ public class Cliente {
 	//METODOS DE CLASE
 	
 	private boolean comprobarLetraDni(String dni) {
+		if(dni==null) {
+			throw new NullPointerException("ERROR:No se puede comprobar la letra de un dni nulo.");
+		}
+		if(dni.trim().isEmpty()) {
+			throw new IllegalArgumentException("ERROR: El dni no se puede comprobar la letra de un dni vacío.");
+		}
 		Pattern pat=Pattern.compile(ER_DNI);
 		Matcher mat=pat.matcher(dni);
 		
+		if(!mat.find()) {
+			throw new IllegalArgumentException("ERROR:El dni no tiene un formato válido.");
+		}
 		String [] letraDni= {"T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E"};
 		int calculo=(Integer.parseInt(mat.group(1)))%23;
 		
@@ -121,13 +123,8 @@ public class Cliente {
 		}
 	}
 	
-	public static Cliente getClienteConDni(String dni, Set<Cliente> coleccionClientes) {
-		for(Cliente cliente : coleccionClientes) {
-			if(!cliente.getDni().equals(dni)) {
-				return cliente;
-			}
-		}
-		return null;
+	public static Cliente getClienteConDni(String dni) {
+		return new Cliente("Pedro",dni,"600500400");
 	}
 	
 	
@@ -155,7 +152,7 @@ public class Cliente {
 	
 	@Override
 	public String toString() {
-		return nombre + ", " + dni + ", " + telefono + ".";
+		return String.format("%s - %s (%s)", nombre, dni, telefono);
 	}
 	
 	

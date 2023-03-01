@@ -1,9 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-
 public class Turismo {
 	
 	
@@ -17,18 +14,22 @@ public class Turismo {
 	
 	//CONSTRUCTORES
 	
-	public Turismo(String marca,String modelo,String matricula,int cilindrada) {
+	public Turismo(String marca,String modelo,int cilindrada,String matricula) {
 		setMarca(marca);
 		setModelo(modelo);
-		setMatricula(matricula);
 		setCilindrada(cilindrada);
+		setMatricula(matricula);
 	}
 	
 	public Turismo(Turismo t) {
+		if(t==null) {
+			throw new NullPointerException("ERROR: No es posible copiar un turismo nulo.");
+		}
 		setMarca(t.getMarca());
 		setModelo(t.getModelo());
-		setMatricula(t.getMatricula());
 		setCilindrada(t.getCilindrada());
+		setMatricula(t.getMatricula());
+
 	}
 	
 	
@@ -40,11 +41,7 @@ public class Turismo {
 	public void setMarca(String marca) {
 		if(marca==null) {
 			throw new NullPointerException("ERROR: La marca no puede ser nula.");
-		}
-		if(marca.trim().isEmpty()) {
-			throw new IllegalArgumentException("ERROR: La marca no puede estar vacia");
-		}
-		
+		}		
 		boolean marcaEncontrada=false;
 		for(String i : ER_MARCA) {
 			if(marca.equals(i)) {
@@ -52,7 +49,7 @@ public class Turismo {
 			}
 		}
 		if(marcaEncontrada==false) {
-			throw new IllegalArgumentException("ERROR: La marca no se encuentra entre las existentes.");
+			throw new IllegalArgumentException("ERROR: La marca no tiene un formato válido.");
 		}
 		
 		this.marca = marca;
@@ -66,10 +63,10 @@ public class Turismo {
 	}
 	public void setModelo(String modelo) {
 		if(modelo==null) {
-			throw new NullPointerException("ERROR: El módelo no puede ser nulo.");
+			throw new NullPointerException("ERROR: El modelo no puede ser nulo.");
 		}
 		if(modelo.trim().isEmpty()) {
-			throw new IllegalArgumentException("ERROR: El modelo no puede estar vacio.");
+			throw new IllegalArgumentException("ERROR: El modelo no puede estar en blanco.");
 		}
 		this.modelo = modelo;
 	}	
@@ -82,13 +79,10 @@ public class Turismo {
 	}
 	public void setMatricula(String matricula) {
 		if(matricula==null) {
-			throw new NullPointerException("ERROR: La matricula no puede ser nula.");
+			throw new NullPointerException("ERROR: La matrícula no puede ser nula.");
 		}
-		if(matricula.trim().isEmpty()) {
-			throw new IllegalArgumentException("ERROR: La matricula no puede estar vacia.");
-		}
-		if(matricula.matches(ER_MATRICULA)) {
-			throw new IllegalArgumentException("ERROR: La matricula no cumple el formato deseado");
+		if(!matricula.matches(ER_MATRICULA)) {
+			throw new IllegalArgumentException("ERROR: La matrícula no tiene un formato válido.");
 		}
 		
 		this.matricula = matricula;
@@ -102,7 +96,7 @@ public class Turismo {
 	}
 	public void setCilindrada(int cilindrada) {
 		if(cilindrada<1 || cilindrada>5000) {
-			throw new IllegalArgumentException("ERROR: La cilindrada debe de estar comprendida entre 1 y 5000.");
+			throw new IllegalArgumentException("ERROR: La cilindrada no es correcta.");
 		}
 		
 		this.cilindrada = cilindrada;
@@ -111,13 +105,11 @@ public class Turismo {
 	
 	//METODOS DE CLASE
 	
-	public static Turismo getTurismoConMatricula(String matricula, Set<Turismo> coleccionTurismo) {
-		for(Turismo turismo:coleccionTurismo) {
-			if(turismo.getMatricula().equals(matricula)) {
-				return turismo;
-			}
+	public static Turismo getTurismoConMatricula(String matricula) {
+		if(matricula==null) {
+			throw new NullPointerException("ERROR: La matrícula no puede ser nula.");
 		}
-		return null;
+		return new Turismo("Seat","Leon",1900,matricula);
 	}
 	
 	
@@ -145,7 +137,6 @@ public class Turismo {
 	
 	@Override
 	public String toString() {
-		return marca + ", " + modelo + ", " + matricula + ", "
-				+ cilindrada;
+		return String.format("%s %s (%sCV) - %s", marca, modelo, cilindrada, matricula, "disponible");
 	}
 }

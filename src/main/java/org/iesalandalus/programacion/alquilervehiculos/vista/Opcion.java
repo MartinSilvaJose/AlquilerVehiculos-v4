@@ -19,35 +19,29 @@ public enum Opcion {
 	LISTAR_ALQUILERES_CLIENTE("Listar los alquileres de un cliente"),
 	LISTAR_ALQUILERES_TURISMO("Listar los alquileres de un turismo");
 	
-	String texto;
-	Opcion[] opcion=Opcion.values();
+	private String texto;
+	
+
 	private Opcion(String texto) {
 		this.texto=texto;
 	}
 	
-	private boolean esOrdinalValido(int ordinal) {
-		if(ordinal<ordinal() || ordinal>=0) {
+	private static boolean esOrdinalValido(int ordinal) {
+		if(ordinal<values().length || ordinal>=0) {
 			return true;
 		}
 		return false;		
 	}
 	
-	public Opcion get(int ordinal) {
-		if(!esOrdinalValido(ordinal)==false) {
+	public static Opcion get(int ordinal) {
+		if(esOrdinalValido(ordinal)==false) {
 			throw new IllegalArgumentException("ERROR: El ordinal introducido no es válido.");
 		}
-		return opcion[ordinal];
+		return values()[ordinal];
 	}
 	
 	public String toString() {
-		return "0.-"+opcion[0].texto+ " \n1.-"+opcion[1].texto+ " \n"+
-				"2.-"+opcion[2].texto+ " \n3.-"+opcion[3].texto+ " \n"+
-				"4.-"+opcion[4].texto+ " \n5.-"+opcion[5].texto+ " \n"+
-				"6.-"+opcion[6].texto+ " \n7.-"+opcion[7].texto+ " \n"+
-				"8.-"+opcion[8].texto+ " \n9.-"+opcion[9].texto+ " \n"+
-				"10.-"+opcion[10].texto+ " \n11.-"+opcion[11].texto+ " \n"+
-				"12.-"+opcion[12].texto+ " \n13.-"+opcion[13].texto+ " \n"+
-				"14.-"+opcion[14].texto+ " \n15.-"+opcion[15].texto+ " \n"+
-				"16.-"+opcion[16].texto+ " \n";
+		return String.format("%d.- %s.", ordinal(),texto);
+
 	}
 }

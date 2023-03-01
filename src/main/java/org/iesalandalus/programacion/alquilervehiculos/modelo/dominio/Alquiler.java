@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+import javax.naming.OperationNotSupportedException;
+
 public class Alquiler {
 	
 	
@@ -25,9 +27,12 @@ public class Alquiler {
 	}
 	
 	public Alquiler(Alquiler a) {
-		setCliente(a.getCliente());
-		setTurismo(a.getTurismo());
-		setFechaAlquiler(a.getFechaAlquiler());
+		if(a==null) {
+			throw new NullPointerException("ERROR:El alquiler no puede ser nulo.");
+		}
+		setCliente(a.cliente);
+		setTurismo(a.turismo);
+		setFechaAlquiler(a.fechaAlquiler);
 	}
 	
 	
@@ -62,9 +67,9 @@ public class Alquiler {
 		if(fechaDevolucion.isEqual(fechaAlquiler)) {
 			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser igual a la fecha de alquiler.");
 		}
-		/*if(fechaDevolucion.isAfter(LocalDate.now()));{
+		if(fechaDevolucion.isAfter(LocalDate.now())){
 			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser posterior a hoy.");
-		}*///PREGUNTAR!!
+		}
 		this.fechaDevolucion = fechaDevolucion;
 	}
 	
@@ -97,13 +102,19 @@ public class Alquiler {
 	
 	//METODOS DE CLASE
 	
-	public void devolver(LocalDate fechaDevolucion) {
+	public void devolver(LocalDate fechaDevolucion) throws OperationNotSupportedException {
+		if(fechaDevolucion==null) {
+			throw new IllegalArgumentException("ERROR: No se puede devolver una fecha nula.");
+		}
+		if(getFechaDevolucion() !=null) {
+			throw new OperationNotSupportedException("ERROR:");
+		}
 		setFechaDevolucion(fechaDevolucion);
 	}
 	
 	public int getPrecio() {
-		int numDias=(int)ChronoUnit.DAYS.between(fechaDevolucion, fechaAlquiler);
-		int precio=(turismo.getCilindrada()/10)+(PRECIO_DIA)*numDias;
+		int numDias=(int)ChronoUnit.DAYS.between(fechaAlquiler, fechaDevolucion);
+		int precio=(turismo.getCilindrada()/10+PRECIO_DIA)*numDias;
 		return precio;
 	}
 	
@@ -133,6 +144,8 @@ public class Alquiler {
 	
 	@Override
 	public String toString() {
+		/*return String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
+				ayer.format(Alquiler.FORMATO_FECHA), "Aún no devuelto", 0);*/
 		return "Alquiler [fechaAlquiler=" + fechaAlquiler + ", fechaDevolucion=" + fechaDevolucion + ", cliente="
 				+ cliente.toString() + ", turismo=" + turismo.toString() + "]";
 	}

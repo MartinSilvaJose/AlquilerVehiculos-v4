@@ -1,47 +1,51 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.*;
 public class Alquileres {
 
 	
 	//DECLARACION
 	
-	private Set<Alquiler> coleccionAlquileres;
+	private List<Alquiler> coleccionAlquileres;
 	
 	
 	//CONSTRUCTORES
 	
 	public Alquileres() {
-		coleccionAlquileres= new LinkedHashSet<>();
+		coleccionAlquileres= new ArrayList<>();
 	}
 	
 	
 	//METODOS DE CLASE
 	
-	public Set<Alquiler> get(){
-		return coleccionAlquileres;
+	public List<Alquiler> get(){
+		List<Alquiler> copia=new ArrayList<>();
+		for(Alquiler i:coleccionAlquileres) {
+			copia.add(i);
+		}
+		return copia;
 	}
 	
-	public Set<Alquiler> get(Cliente cliente){
+	public List<Alquiler> get(Cliente cliente){
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: El cliente del cual deseas obtener una lista no puede ser nulo.");
 		}
-		Set<Alquiler> alquilerPorCliente=new LinkedHashSet<>();
+		List<Alquiler> alquilerPorCliente=new ArrayList<>();
 		for(Alquiler i:coleccionAlquileres) {
 			if(i.getCliente().equals(cliente));
-			alquilerPorCliente.add(i);
+				alquilerPorCliente.add(i);
 		}
 		return alquilerPorCliente;
 	}
 	
-	public Set<Alquiler> get(Turismo turismo){
+	public List<Alquiler> get(Turismo turismo){
 		if(turismo==null) {
 			throw new NullPointerException("ERROR:El turismo del cual desea obtener un lista no puede ser nulo.");
 		}
-		Set<Alquiler> alquilerPorTurismo=new LinkedHashSet<>();
+		List<Alquiler> alquilerPorTurismo=new ArrayList<>();
 		for(Alquiler i:coleccionAlquileres) {
 			if(i.getTurismo().equals(turismo)) {
 				alquilerPorTurismo.add(i);
@@ -77,7 +81,7 @@ public class Alquileres {
 					throw new IllegalArgumentException("ERROR: Hay una fecha de devolucion pendiende de este turismo.");
 				}
 			}
-			if(i.getFechaDevolucion().isAfter(fechaAlquiler)) {
+			if(i.getFechaDevolucion().isBefore(fechaAlquiler)) {
 				throw new IllegalArgumentException("ERROR: Hay una fecha de devolucion posterior a la fecha de Alquiler.");
 				
 			}
@@ -99,48 +103,32 @@ public class Alquileres {
 		if(fechaDevolucion==null) {
 			throw new NullPointerException("ERROR:No puedes confirmar una devolución si la fecha es nula");
 		}
-		boolean devolucionAsignada=false;
-		for(Alquiler i:coleccionAlquileres) {
-			if(i.equals(alquiler)) {
-				i.setFechaDevolucion(fechaDevolucion);
-				devolucionAsignada=true;
-			}
-		}
-		if(devolucionAsignada=false) {
+		if(!coleccionAlquileres.contains(alquiler)) {
 			throw new IllegalArgumentException("ERROR:La devolución no se ha podido realizar porque este alquiler no se encuentra en la lista.");
 		}
+		buscar(alquiler).setFechaDevolucion(fechaDevolucion);
 	}
 	
 	public Alquiler buscar(Alquiler alquiler) {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR:No se puede buscar un cliente nulo.");
 		}
-		boolean alquilerEncontrado=false;
 		for(Alquiler i:coleccionAlquileres) {
 			if(i.equals(alquiler)) {
-				alquilerEncontrado=true;
+				return alquiler;
 			}
 		}
-		if(alquilerEncontrado=false) {
-			throw new IllegalArgumentException("ERROR:El alquiler no se encuentra en la lista de Alquileres");	
-		}
-		return alquiler;
+		return null;
 	}
 	
 	public void borrar(Alquiler alquiler) {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR:No se puede borrar un cliente nulo.");
 		}
-		boolean alquilerEncontrado=false;
-		for(Alquiler i:coleccionAlquileres) {
-			if(i.equals(alquiler)) {
-				coleccionAlquileres.remove(alquiler);
-				alquilerEncontrado=true;
-			}
-			if(alquilerEncontrado=false) {
-				throw new IllegalArgumentException("ERROR:No se borrar el cliente ya que no existe en la lista.");
-			}
+		if(!coleccionAlquileres.contains(alquiler)) {
+			throw new IllegalArgumentException("ERROR:No se borrar el cliente ya que no existe en la lista.");
 		}
+			coleccionAlquileres.add(alquiler);
 		
 	}
 }
