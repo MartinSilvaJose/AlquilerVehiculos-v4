@@ -57,6 +57,9 @@ public class Clientes {
 	}
 	
 	public void borrar(Cliente cliente) {
+		if(cliente==null) {
+			throw new NullPointerException("ERROR: No se puede borrar un cliente nulo");
+		}
 		if(!coleccionClientes.contains(cliente)) {
 			throw new IllegalArgumentException("ERROR:El cliente que deseas borrar no existe.");
 		}
@@ -73,14 +76,6 @@ public class Clientes {
 		}
 		buscar(cliente).setNombre(nombre);
 		buscar(cliente).setTelefono(telefono);
-		
-		//hice algo raro aquí abajo pero al final me aproveche de la aliasing
-		/*Cliente clienteModificado=new Cliente(cliente);
-		clienteModificado.setNombre(nombre);
-		clienteModificado.setTelefono(telefono);
-		coleccionClientes.remove(cliente);
-		cliente=clienteModificado;
-		coleccionClientes.add(cliente);*/
 		
 	}
 	

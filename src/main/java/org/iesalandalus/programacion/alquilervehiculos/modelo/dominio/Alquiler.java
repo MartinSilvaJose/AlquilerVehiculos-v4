@@ -30,6 +30,9 @@ public class Alquiler {
 		if(a==null) {
 			throw new NullPointerException("ERROR:El alquiler no puede ser nulo.");
 		}
+		if(a.getFechaDevolucion()!=null) {
+			throw new NullPointerException("ERROR:La fecha de devolución no puede ser nula");
+		}
 		setCliente(a.cliente);
 		setTurismo(a.turismo);
 		setFechaAlquiler(a.fechaAlquiler);
@@ -107,14 +110,17 @@ public class Alquiler {
 			throw new IllegalArgumentException("ERROR: No se puede devolver una fecha nula.");
 		}
 		if(getFechaDevolucion() !=null) {
-			throw new OperationNotSupportedException("ERROR:");
+			throw new OperationNotSupportedException("ERROR:la fecha de devlucion esta sin confirmar.");
 		}
 		setFechaDevolucion(fechaDevolucion);
 	}
 	
 	public int getPrecio() {
-		int numDias=(int)ChronoUnit.DAYS.between(fechaAlquiler, fechaDevolucion);
-		int precio=(turismo.getCilindrada()/10+PRECIO_DIA)*numDias;
+		int diaAlquiler=fechaAlquiler.getDayOfMonth();
+		int diaDevolucion=fechaDevolucion.getDayOfMonth();
+		int numDias=diaDevolucion-diaAlquiler;
+		int valorCilindrada=turismo.getCilindrada()/10;
+		int precio=(PRECIO_DIA+valorCilindrada)*numDias;
 		return precio;
 	}
 	
@@ -144,12 +150,12 @@ public class Alquiler {
 	
 	@Override
 	public String toString() {
-		/*return String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
-				ayer.format(Alquiler.FORMATO_FECHA), "Aún no devuelto", 0);*/
-		return "Alquiler [fechaAlquiler=" + fechaAlquiler + ", fechaDevolucion=" + fechaDevolucion + ", cliente="
-				+ cliente.toString() + ", turismo=" + turismo.toString() + "]";
+		if(fechaDevolucion==null) {
+			return String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
+					fechaAlquiler.format(FORMATO_FECHA), "Aún no devuelto", 0);
+		}
+		return String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
+				fechaAlquiler.format(FORMATO_FECHA),fechaDevolucion.format(FORMATO_FECHA), getPrecio());
 	}
-	
-	
 	
 }

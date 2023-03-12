@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.OperationNotSupportedException;
+
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
@@ -39,7 +41,7 @@ public class Modelo {
 			throw new NullPointerException("ERROR: no puedes insertar un cliente nulo.");
 		}
 		
-		clientes.insertar(cliente=new Cliente(cliente));
+		clientes.insertar(new Cliente(cliente));
 	}
 	
 	public void insertar(Turismo turismo) {
@@ -47,15 +49,15 @@ public class Modelo {
 			throw new NullPointerException("ERROR: no puedes insertar un turismo nulo.");
 		}
 	
-		turismos.insertar(turismo=new Turismo(turismo));
+		turismos.insertar(new Turismo(turismo));
 	}
 	
-	public void insertar(Alquiler alquiler) {
+	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR: no puedes insertar un alquiler nulo.");
 		}
 		
-		alquileres.insertar(alquiler=new Alquiler(alquiler));
+		alquileres.insertar(new Alquiler(alquiler));
 	}
 	
 	
@@ -67,7 +69,7 @@ public class Modelo {
 		}
 		
 		cliente=clientes.buscar(cliente);
-		return cliente=new Cliente(cliente);
+		return new Cliente(cliente);
 	}
 	
 	public Turismo buscar(Turismo turismo) {
@@ -77,6 +79,7 @@ public class Modelo {
 		turismo=turismos.buscar(turismo=new Turismo(turismo));
 		return turismo;
 	}
+	
 	public Alquiler buscar(Alquiler alquiler) {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR: no puedes buscar un alquiler nulo.");

@@ -1,7 +1,9 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
@@ -37,12 +39,13 @@ public class Consola {
 		int enteroIntroducido=Entrada.entero();
 		return enteroIntroducido;
 	}
-	private static LocalDate leerFecha(String mensaje) {
+	private static LocalDate leerFecha(String mensaje) throws DateTimeParseException{
 		System.out.println(mensaje);
 		String fechaIntroducida;
 		do {
 			fechaIntroducida=Entrada.cadena();
 		}while(!fechaIntroducida.matches(PATRON_FECHA));
+		
 		LocalDate fechaCorrecta=LocalDate.parse(fechaIntroducida);
 		fechaCorrecta.format(FORMATO_FECHA);
 		return fechaCorrecta;

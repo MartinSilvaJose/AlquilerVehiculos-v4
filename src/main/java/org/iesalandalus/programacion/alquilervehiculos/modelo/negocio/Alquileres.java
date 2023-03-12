@@ -3,6 +3,9 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.OperationNotSupportedException;
+
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.*;
 public class Alquileres {
 
@@ -59,7 +62,7 @@ public class Alquileres {
 
 	}
 	
-	public void comprobarAlquiler(Cliente cliente,Turismo turismo,LocalDate fechaAlquiler) {
+	public void comprobarAlquiler(Cliente cliente,Turismo turismo,LocalDate fechaAlquiler)throws OperationNotSupportedException {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: No puede comprobar el alquiler con un cliente nulo.");
 		}
@@ -80,15 +83,20 @@ public class Alquileres {
 				if(i.getFechaDevolucion()==null) {
 					throw new IllegalArgumentException("ERROR: Hay una fecha de devolucion pendiende de este turismo.");
 				}
+				if(i.getFechaAlquiler().isAfter(fechaAlquiler)) {
+					throw new OperationNotSupportedException("ERROR: El turismo tiene un alquiler posterior.");
+				}
 			}
 			if(i.getFechaDevolucion().isBefore(fechaAlquiler)) {
-				throw new IllegalArgumentException("ERROR: Hay una fecha de devolucion posterior a la fecha de Alquiler.");
-				
+				throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
+			}
+			if(i.getFechaDevolucion().isEqual(fechaAlquiler)) {
+				throw new OperationNotSupportedException("ERROR: El cliente tiene el mismo alquiler alquiler");
 			}
 		}
 	}
 	
-	public void insertar(Alquiler alquiler) {
+	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR:No puedes insertar un alquiler nulo");
 		}

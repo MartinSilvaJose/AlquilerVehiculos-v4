@@ -1,4 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista;
+import javax.naming.OperationNotSupportedException;
+
 import org.iesalandalus.programacion.alquilervehiculos.controlador.*;
 
 public class Vista {
@@ -17,10 +19,9 @@ public class Vista {
 	
 	//	COMENZAR Y TERMINAR
 	public void comenzar() {
-		controlador.comenzar();
 		Consola.mostrarCabecera();
 		Consola.mostrarMenu();
-		Consola.elegirOpcion();
+		ejecutar(Consola.elegirOpcion());
 	}
 	public void terminar() {
 		controlador.terminar();
@@ -31,7 +32,7 @@ public class Vista {
 	public void ejecutar(Opcion opcion) {
 		switch(opcion) {
 		case SALIR:
-			controlador.terminar();
+			System.exit(0);
 			break;
 		case INSERTAR_CLIENTE:
 			insertarCliente();
@@ -89,81 +90,161 @@ public class Vista {
 	//	INSERTAR 
 	public void insertarCliente() {
 		Consola.mostrarCabecera();
-		controlador.insertar(Consola.leerCliente());
+		try {
+			controlador.insertar(Consola.leerCliente());
+		} catch (IllegalArgumentException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 	public void insertarTurismo() {
 		Consola.mostrarCabecera();
-		controlador.insertar(Consola.leerTurismo());
+		try {
+			controlador.insertar(Consola.leerTurismo());
+		} catch (IllegalArgumentException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 	public void insertarAlquiler() {
 		Consola.mostrarCabecera();
-		controlador.insertar(Consola.leerAlquiler());
+		try {
+			controlador.insertar(Consola.leerAlquiler());
+		} catch (IllegalArgumentException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 	
 	//	BUSCAR
 	public void buscarCliente() {
 		Consola.mostrarCabecera();
-		controlador.buscar(Consola.leerClienteDni());
-		// imprimir datos con syso y controlarlo
+		if(controlador.buscar(Consola.leerClienteDni())==null) {
+			System.out.println("ERROR:El cliente que busca no existe");
+		}
+		else {
+			System.out.println(controlador.buscar(Consola.leerClienteDni()));
+		}
+
 	}
 	public void buscarTurismo() {
 		Consola.mostrarCabecera();
-		controlador.buscar(Consola.leerTurismo());
+		if(controlador.buscar(Consola.leerTurismoMatricula())==null) {
+			System.out.println("ERROR:El turismo que busca no existe");
+		}
+		else {
+			System.out.println(controlador.buscar(Consola.leerTurismoMatricula()));
+
+		}
+
 	}
 	public void buscarAlquiler() {
 		Consola.mostrarCabecera();
-		controlador.buscar(Consola.leerAlquiler());
+		if(controlador.buscar(Consola.leerAlquiler())==null) {
+			System.out.println("ERROR:El Alquiler que busca no existe");
+		}
+		else {
+			System.out.println(controlador.buscar(Consola.leerAlquiler()));
+		}
 	}
 	
 	
 	//	MODIFICAR Y DEVOLVER
 	public void modificarCliente() {
 		Consola.mostrarCabecera();
-		controlador.modificar(Consola.leerCliente(),Consola.leerNombre(),Consola.leerTelefono());
+		try {
+			controlador.modificar(Consola.leerCliente(),Consola.leerNombre(),Consola.leerTelefono());
+		} catch (IllegalArgumentException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	public void devolverAlquiler() {
 		Consola.mostrarCabecera();
-		controlador.devolver(Consola.leerAlquiler(),Consola.leerFechaDevolucion());
+		try {
+			controlador.devolver(Consola.leerAlquiler(),Consola.leerFechaDevolucion());
+		} catch (IllegalArgumentException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	
 	//	BORRAR
 	public void borrarCliente() {
 		Consola.mostrarCabecera();
-		controlador.borrar(Consola.leerCliente());
+		try {
+			controlador.borrar(controlador.buscar(Consola.leerClienteDni()));
+		} catch (IllegalArgumentException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 	public void borrarTurismo() {
 		Consola.mostrarCabecera();
-		controlador.borrar(Consola.leerTurismo());
+		try {
+			controlador.borrar(controlador.buscar(Consola.leerTurismoMatricula()));
+		} catch (IllegalArgumentException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 	public void borrarAlquiler() {
 		Consola.mostrarCabecera();
-		controlador.borrar(Consola.leerAlquiler());
+		try {
+			controlador.borrar(Consola.leerAlquiler());
+		} catch (IllegalArgumentException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	
 	//	LISTAR
 	public void listarClientes() {
 		Consola.mostrarCabecera();
-		controlador.getClientes();
+		System.out.println(controlador.getClientes());
+
 	}
 	public void listarTurismos() {
 		Consola.mostrarCabecera();
-		controlador.getTurismos();
+		System.out.println(controlador.getTurismos());
 	}
 	public void listarAlquileres() {
 		Consola.mostrarCabecera();
-		controlador.getAlquileres();
+		System.out.println(controlador.getAlquileres());
 	}
 	
 	
 	//	LISTAR CON PARAMETROS
 	public void listarAlquileresCliente() {
 		Consola.mostrarCabecera();
-		controlador.getAlquileres(Consola.leerCliente());
+		try {
+			controlador.getAlquileres(Consola.leerCliente());
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	public void listarAlquileresTurismo() {
 		Consola.mostrarCabecera();
-		controlador.getAlquileres(Consola.leerTurismo());
+		try {
+			controlador.getAlquileres(Consola.leerTurismo());
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

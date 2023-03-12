@@ -3,6 +3,8 @@ package org.iesalandalus.programacion.alquilervehiculos.controlador;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.naming.OperationNotSupportedException;
+
 import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
@@ -28,21 +30,21 @@ public class Controlador {
 	
 	//	COMENZAR Y TERMINAR 
 	public void comenzar() {
-		modelo.comenzar();
+		vista.comenzar();
 	}
 	public void terminar() {
-		modelo.terminar();
+		vista.terminar();
 	}
 
 	
 	//	INSERTAR
-	public void insertar(Cliente cliente) {
+	public void insertar(Cliente cliente)throws OperationNotSupportedException {
 		modelo.insertar(cliente);
 	}
-	public void insertar(Turismo turismo) {
+	public void insertar(Turismo turismo)throws OperationNotSupportedException {
 		modelo.insertar(turismo);
 	}
-	public void insertar(Alquiler alquiler) {
+	public void insertar(Alquiler alquiler)throws OperationNotSupportedException {
 		modelo.insertar(alquiler);
 	}
 	
@@ -61,22 +63,22 @@ public class Controlador {
 	
 	
 	// MODIFICAR Y DEVOLVER
-	public void modificar(Cliente cliente, String nombre, String telefono) {
+	public void modificar(Cliente cliente, String nombre, String telefono)throws OperationNotSupportedException {
 		modelo.modificar(cliente, nombre, telefono);
 	}
-	public void devolver(Alquiler alquiler,LocalDate fechaDevolucion) {
+	public void devolver(Alquiler alquiler,LocalDate fechaDevolucion)throws OperationNotSupportedException {
 		modelo.devolver(alquiler, fechaDevolucion);
 	}
 	
 	
 	//BORRAR
-	public void borrar(Cliente cliente) {
+	public void borrar(Cliente cliente)throws OperationNotSupportedException {
 		modelo.borrar(cliente);
 	}
-	public void borrar(Turismo turismo) {
+	public void borrar(Turismo turismo)throws OperationNotSupportedException {
 		modelo.borrar(turismo);
 	}
-	public void borrar(Alquiler alquiler) {
+	public void borrar(Alquiler alquiler)throws OperationNotSupportedException {
 		modelo.borrar(alquiler);
 	}
 	
