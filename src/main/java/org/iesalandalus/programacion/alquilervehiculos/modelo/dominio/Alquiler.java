@@ -12,7 +12,7 @@ public class Alquiler {
 	
 	//DECLARACIÓN
 	
-	protected DateTimeFormatter FORMATO_FECHA= DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	static final DateTimeFormatter FORMATO_FECHA= DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private int PRECIO_DIA=20;
 	private LocalDate fechaAlquiler,fechaDevolucion;
 	private Cliente cliente;
@@ -21,17 +21,14 @@ public class Alquiler {
 	
 	//CONSTRUCTORES
 	public Alquiler(Cliente cliente,Turismo turismo,LocalDate fechaAlquiler) {
-		setCliente(new Cliente(cliente));
-		setTurismo(new Turismo(turismo));
+		setCliente(cliente);
+		setTurismo(turismo);
 		setFechaAlquiler(fechaAlquiler);
 	}
 	
 	public Alquiler(Alquiler a) {
 		if(a==null) {
 			throw new NullPointerException("ERROR:El alquiler no puede ser nulo.");
-		}
-		if(a.getFechaDevolucion()!=null) {
-			throw new NullPointerException("ERROR:La fecha de devolución no puede ser nula");
 		}
 		setCliente(a.cliente);
 		setTurismo(a.turismo);
@@ -84,7 +81,7 @@ public class Alquiler {
 	}
 	public void setCliente(Cliente cliente) {
 		if(cliente==null) {
-			throw new NullPointerException("ERROR: No puedes alquilarle a un cliente nulo.");
+			throw new NullPointerException("ERROR: El cliente no puede ser nulo.");
 		}
 		this.cliente = cliente;
 	}
@@ -97,7 +94,7 @@ public class Alquiler {
 	}
 	public void setTurismo(Turismo turismo) {
 		if(turismo==null) {
-			throw new NullPointerException("ERROR: No puedes alquilar un turismo nulo.");
+			throw new NullPointerException("ERROR: El turismo no puede ser nulo.");
 		}
 		this.turismo = turismo;
 	}
@@ -116,11 +113,12 @@ public class Alquiler {
 	}
 	
 	public int getPrecio() {
-		int diaAlquiler=fechaAlquiler.getDayOfMonth();
-		int diaDevolucion=fechaDevolucion.getDayOfMonth();
-		int numDias=diaDevolucion-diaAlquiler;
-		int valorCilindrada=turismo.getCilindrada()/10;
-		int precio=(PRECIO_DIA+valorCilindrada)*numDias;
+		int precio =0;
+		if(fechaDevolucion!=null) {
+			int numDias=(int)ChronoUnit.DAYS.between(getFechaAlquiler(), getFechaDevolucion());
+			int factoCilindrada=turismo.getCilindrada()/10;
+			precio=(PRECIO_DIA+factoCilindrada)*numDias;
+		}
 		return precio;
 	}
 	
@@ -150,12 +148,15 @@ public class Alquiler {
 	
 	@Override
 	public String toString() {
+		String string="ERROR.";
 		if(fechaDevolucion==null) {
-			return String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
-					fechaAlquiler.format(FORMATO_FECHA), "Aún no devuelto", 0);
+			string=String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
+					getFechaAlquiler().format(FORMATO_FECHA), "Aún no devuelto", getPrecio());
+		}else {
+			string=String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
+					fechaAlquiler.format(FORMATO_FECHA),fechaDevolucion.format(FORMATO_FECHA), getPrecio());
 		}
-		return String.format("%s <---> %s, %s - %s (%d€)", cliente, turismo,
-				fechaAlquiler.format(FORMATO_FECHA),fechaDevolucion.format(FORMATO_FECHA), getPrecio());
+
+		return string;
 	}
-	
 }

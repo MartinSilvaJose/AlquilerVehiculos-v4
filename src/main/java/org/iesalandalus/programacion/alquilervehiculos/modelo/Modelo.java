@@ -18,7 +18,7 @@ public class Modelo {
 	private Turismos turismos;
 	
 	public Modelo(){
-		
+		comenzar();
 	}
 	
 	//COMENZAR & TERMINAR
@@ -36,20 +36,20 @@ public class Modelo {
 	
 	//INSERTAR
 	
-	public void insertar(Cliente cliente) {
+	public void insertar(Cliente cliente) throws OperationNotSupportedException {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: no puedes insertar un cliente nulo.");
 		}
 		
-		clientes.insertar(new Cliente(cliente));
+		clientes.insertar(cliente);
 	}
 	
-	public void insertar(Turismo turismo) {
+	public void insertar(Turismo turismo) throws OperationNotSupportedException {
 		if(turismo==null) {
 			throw new NullPointerException("ERROR: no puedes insertar un turismo nulo.");
 		}
 	
-		turismos.insertar(new Turismo(turismo));
+		turismos.insertar(turismo);
 	}
 	
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
@@ -57,7 +57,7 @@ public class Modelo {
 			throw new NullPointerException("ERROR: no puedes insertar un alquiler nulo.");
 		}
 		
-		alquileres.insertar(new Alquiler(alquiler));
+		alquileres.insertar(alquiler);
 	}
 	
 	
@@ -76,7 +76,7 @@ public class Modelo {
 		if(turismo==null) {
 			throw new NullPointerException("ERROR: no puedes buscar un turismo nulo.");
 		}
-		turismo=turismos.buscar(turismo=new Turismo(turismo));
+		turismo=turismos.buscar(turismo);
 		return turismo;
 	}
 	
@@ -84,14 +84,14 @@ public class Modelo {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR: no puedes buscar un alquiler nulo.");
 		}
-		alquiler=new Alquiler(alquileres.buscar(alquiler=new Alquiler(alquiler)));
+		alquiler=new Alquiler(alquileres.buscar(alquiler));
 		return alquiler;
 	}
 	
 	
 	//MODIFICAR & DEVOLVER
 	
-	public void  modificar(Cliente cliente,String nombre,String telefono) {
+	public void  modificar(Cliente cliente,String nombre,String telefono) throws OperationNotSupportedException {
 		clientes.modificar(cliente, nombre, telefono);
 	}
 	
@@ -102,7 +102,7 @@ public class Modelo {
 	
 	//BORRAR
 	
-	public void borrar(Cliente cliente) {
+	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 		List<Alquiler> alquilerPorCliente=alquileres.get(cliente);
 		for(Alquiler i:alquilerPorCliente) {
 			alquilerPorCliente.remove(i);
@@ -110,7 +110,7 @@ public class Modelo {
 		clientes.borrar(cliente);
 	}
 	
-	public void borrar(Turismo turismo) {
+	public void borrar(Turismo turismo) throws OperationNotSupportedException {
 		List<Alquiler> alquilerPorTurismo=alquileres.get(turismo);
 		for(Alquiler i:alquilerPorTurismo) {
 			alquilerPorTurismo.remove(i);

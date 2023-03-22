@@ -2,6 +2,9 @@ package org.iesalandalus.programacion.alquilervehiculos.vista;
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.controlador.*;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 
 public class Vista {
 	
@@ -24,7 +27,7 @@ public class Vista {
 		ejecutar(Consola.elegirOpcion());
 	}
 	public void terminar() {
-		controlador.terminar();
+		System.out.println("Hasta la próxima.");
 	}
 	
 	
@@ -32,55 +35,88 @@ public class Vista {
 	public void ejecutar(Opcion opcion) {
 		switch(opcion) {
 		case SALIR:
+			terminar();
 			System.exit(0);
 			break;
 		case INSERTAR_CLIENTE:
 			insertarCliente();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case INSERTAR_TURISMO:
 			insertarTurismo();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case INSERTAR_ALQUILER:
 			insertarAlquiler();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case BUSCAR_CLIENTE:
 			buscarCliente();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case BUSCAR_TURISMO:
 			buscarTurismo();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case BUSCAR_ALQUILER:
-			buscarAlquiler();;
+			buscarAlquiler();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case MODIFICAR_CLIENTE:
 			modificarCliente();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case DEVOLVER_ALQUILER:
 			devolverAlquiler();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case BORRAR_CLIENTE:
 			borrarCliente();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case BORRAR_TURISMO:
 			borrarTurismo();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case BORRAR_ALQUILER:
 			borrarAlquiler();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case LISTAR_CLIENTES:
 			listarClientes();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case LISTAR_TURISMOS:
 			listarTurismos();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case LISTAR_ALQUILERES:
 			listarAlquileres();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case LISTAR_ALQUILERES_CLIENTE:
 			listarAlquileresCliente();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		case LISTAR_ALQUILERES_TURISMO:
 			listarAlquileresTurismo();
+			System.out.println("Operación realizada con éxito");
+			comenzar();
 			break;
 		}
 				
@@ -125,32 +161,35 @@ public class Vista {
 	//	BUSCAR
 	public void buscarCliente() {
 		Consola.mostrarCabecera();
-		if(controlador.buscar(Consola.leerClienteDni())==null) {
+		Cliente cliente=controlador.buscar(Consola.leerClienteDni());
+		if(cliente==null) {
 			System.out.println("ERROR:El cliente que busca no existe");
 		}
 		else {
-			System.out.println(controlador.buscar(Consola.leerClienteDni()));
+			System.out.println(cliente);
 		}
 
 	}
 	public void buscarTurismo() {
 		Consola.mostrarCabecera();
-		if(controlador.buscar(Consola.leerTurismoMatricula())==null) {
+		Turismo turismo=controlador.buscar(Consola.leerTurismoMatricula());
+		if(turismo==null) {
 			System.out.println("ERROR:El turismo que busca no existe");
 		}
 		else {
-			System.out.println(controlador.buscar(Consola.leerTurismoMatricula()));
+			System.out.println(turismo);
 
 		}
 
 	}
 	public void buscarAlquiler() {
 		Consola.mostrarCabecera();
-		if(controlador.buscar(Consola.leerAlquiler())==null) {
+		Alquiler alquiler=controlador.buscar(Consola.leerAlquiler());
+		if(alquiler==null) {
 			System.out.println("ERROR:El Alquiler que busca no existe");
 		}
 		else {
-			System.out.println(controlador.buscar(Consola.leerAlquiler()));
+			System.out.println(alquiler);
 		}
 	}
 	
@@ -159,7 +198,8 @@ public class Vista {
 	public void modificarCliente() {
 		Consola.mostrarCabecera();
 		try {
-			controlador.modificar(Consola.leerCliente(),Consola.leerNombre(),Consola.leerTelefono());
+			Cliente cliente=controlador.buscar(Consola.leerClienteDni());
+			controlador.modificar(cliente,Consola.leerNombre(),Consola.leerTelefono());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {

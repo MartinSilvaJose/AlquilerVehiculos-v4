@@ -1,6 +1,5 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -54,14 +53,16 @@ public class Consola {
 		int opcionElegida=-1;
 		do {
 			opcionElegida=leerEntero("Introduzca la opción a elegir.");
-		}while(opcionElegida>Opcion.values().length || opcionElegida<1);
+		}while(opcionElegida>Opcion.values().length || opcionElegida<0);
 		
 		return Opcion.get(opcionElegida);
 		
 	}
 	public static Cliente leerCliente() {
 		String dni=leerCadena("Introduza el dni del cliente.");
-		Cliente cliente= new Cliente(leerNombre(),dni,leerTelefono());
+		String nombre=leerNombre();
+		String telefono=leerTelefono();
+		Cliente cliente= new Cliente(nombre,dni,telefono);
 		
 		return cliente;
 	}
@@ -101,4 +102,5 @@ public class Consola {
 		LocalDate fechaDevolucion=leerFecha("Introduzca la fecha de devolución.");
 		return fechaDevolucion;
 	}
+	
 }

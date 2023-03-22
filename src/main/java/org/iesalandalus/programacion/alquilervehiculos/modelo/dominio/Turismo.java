@@ -7,7 +7,7 @@ public class Turismo {
 	//DECLARACIÓN
 	
 	private String [] ER_MARCA= {"Seat", "Land Rover", "KIA", "Rolls-Royce", "SsangYong"};
-	private String ER_MATRICULA="[0-9]{4}[a-zA-Z]{3}";
+	private String ER_MATRICULA="[0-9]{4}[BCDFGHJKLMNPQRSTVWXYZ]{3}";
 	private String marca,modelo,matricula;
 	private int cilindrada;
 	

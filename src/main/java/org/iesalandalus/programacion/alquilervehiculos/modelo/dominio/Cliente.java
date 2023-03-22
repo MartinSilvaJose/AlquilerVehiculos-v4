@@ -1,16 +1,15 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class Cliente {
 	
 	
 	//DECLARACIÓN
 	
-	private String ER_NOMBRE="[a-zA-Z ]+";
-	private String ER_DNI="([0-9]{8})([a-zA-Z])";
+	private String ER_NOMBRE="[A-Z][a-zñ]+( [A-Z][a-zñ]+)*";
+	private String ER_DNI="[0-9]{8}[a-zA-Z]";
 	private String ER_TELEFONO="[0-9]{9}";
 	private String nombre,dni,telefono;
 	
@@ -44,16 +43,20 @@ public class Cliente {
 		if(nombre==null) {
 			throw new NullPointerException("ERROR: El nombre no puede ser nulo.");
 		}
+		if(nombre.trim().isEmpty()) {
+			throw new IllegalArgumentException("ERROR: El nombre no tiene un formato válido.");
+		}
 		if(!nombre.matches(ER_NOMBRE)) {
 			throw new IllegalArgumentException("ERROR: El nombre no tiene un formato válido.");
 		}
-		
+		String nombreAGuardar="";
 		String [] palabras = nombre.trim().split("\\s");
 		for(String i:palabras) {
-			i=i.trim().toUpperCase().charAt(0)+"";
-			nombre=i+" ";
+			i.toUpperCase().charAt(0);
+			nombreAGuardar=nombreAGuardar+i+" ";
 		}
-		this.nombre = nombre;
+		nombreAGuardar=nombreAGuardar.trim();
+		this.nombre = nombreAGuardar;
 	}
 	
 	
@@ -98,30 +101,27 @@ public class Cliente {
 	
 	
 	//METODOS DE CLASE
-	
-	private boolean comprobarLetraDni(String dni) {
+
+	  private boolean comprobarLetraDni(String dni) {
 		if(dni==null) {
 			throw new NullPointerException("ERROR:No se puede comprobar la letra de un dni nulo.");
 		}
-		if(dni.trim().isEmpty()) {
-			throw new IllegalArgumentException("ERROR: El dni no se puede comprobar la letra de un dni vacío.");
-		}
-		Pattern pat=Pattern.compile(ER_DNI);
-		Matcher mat=pat.matcher(dni);
-		
-		if(!mat.find()) {
+		if(!dni.matches(ER_DNI)) {
 			throw new IllegalArgumentException("ERROR:El dni no tiene un formato válido.");
 		}
-		String [] letraDni= {"T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E"};
-		int calculo=(Integer.parseInt(mat.group(1)))%23;
+		int calculo=(Integer.parseInt(dni.substring(0,8)))%23;
+		char letraDni=dni.toUpperCase().charAt(8);
+		char [] letraPosible= {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
 		
-		if(letraDni[calculo].equals(mat.group(2))) {
+		
+		if(letraPosible[calculo]==letraDni)  {
 			return true;
 		}
 		else {
 			return false;
 		}
 	}
+
 	
 	public static Cliente getClienteConDni(String dni) {
 		return new Cliente("Pedro",dni,"600500400");
@@ -152,7 +152,7 @@ public class Cliente {
 	
 	@Override
 	public String toString() {
-		return String.format("%s - %s (%s)", nombre, dni, telefono);
+		return String.format("%s - %s (%s)", this.nombre, this.dni, this.telefono);
 	}
 	
 	
