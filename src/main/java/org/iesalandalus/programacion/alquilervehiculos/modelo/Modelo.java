@@ -40,8 +40,8 @@ public class Modelo {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: no puedes insertar un cliente nulo.");
 		}
-		
-		clientes.insertar(cliente);
+
+		clientes.insertar(new Cliente(cliente));
 	}
 	
 	public void insertar(Turismo turismo) throws OperationNotSupportedException {
@@ -49,15 +49,15 @@ public class Modelo {
 			throw new NullPointerException("ERROR: no puedes insertar un turismo nulo.");
 		}
 	
-		turismos.insertar(turismo);
+		turismos.insertar(new Turismo(turismo));
 	}
 	
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
 		if(alquiler==null) {
-			throw new NullPointerException("ERROR: no puedes insertar un alquiler nulo.");
+			throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
 		}
 		
-		alquileres.insertar(alquiler);
+		alquileres.insertar(new Alquiler(alquiler));
 	}
 	
 	
@@ -77,7 +77,7 @@ public class Modelo {
 			throw new NullPointerException("ERROR: no puedes buscar un turismo nulo.");
 		}
 		turismo=turismos.buscar(turismo);
-		return turismo;
+		return new Turismo(turismo);
 	}
 	
 	public Alquiler buscar(Alquiler alquiler) {
@@ -85,7 +85,7 @@ public class Modelo {
 			throw new NullPointerException("ERROR: no puedes buscar un alquiler nulo.");
 		}
 		alquiler=new Alquiler(alquileres.buscar(alquiler));
-		return alquiler;
+		return new Alquiler(alquiler);
 	}
 	
 	
@@ -95,7 +95,7 @@ public class Modelo {
 		clientes.modificar(cliente, nombre, telefono);
 	}
 	
-	public void devolver(Alquiler alquiler,LocalDate fechaDevolucion) {
+	public void devolver(Alquiler alquiler,LocalDate fechaDevolucion) throws OperationNotSupportedException {
 		alquileres.devolver(alquiler, fechaDevolucion);
 	}
 	
@@ -118,7 +118,7 @@ public class Modelo {
 		turismos.borrar(turismo);
 	}
 	
-	public void borrar(Alquiler alquiler) {
+	public void borrar(Alquiler alquiler) throws OperationNotSupportedException {
 		alquileres.borrar(alquiler);
 	}
 	

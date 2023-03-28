@@ -92,8 +92,8 @@ public class Consola {
 		return Turismo.getTurismoConMatricula(leerCadena("Introduce la matricula."));
 	}
 	public static Alquiler leerAlquiler() {
-		Cliente cliente=new Cliente(leerCliente());
-		Turismo turismo=new Turismo(leerTurismo());
+		Cliente cliente=new Cliente(leerClienteDni());
+		Turismo turismo=new Turismo(leerTurismoMatricula());
 		LocalDate fecha=leerFecha("Introduzca la fecha de alquiler");
 		Alquiler alquiler=new Alquiler(cliente, turismo, fecha);
 		return alquiler;

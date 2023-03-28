@@ -76,50 +76,55 @@ public class Alquileres {
 		for(Alquiler i:coleccionAlquileres) {
 			if(i.getCliente().equals(cliente)) {
 				if(i.getFechaDevolucion()==null) {
-					throw new IllegalArgumentException("ERROR: Hay una fecha de devolucion pendiende de este cliente.");
+					throw new OperationNotSupportedException("ERROR: El cliente tiene otro alquiler sin devolver.");
+				}
+				if(i.getFechaDevolucion().isAfter(fechaAlquiler)) {
+					throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
+				}
+				if(i.getFechaDevolucion().isEqual(fechaAlquiler)) {
+					throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
 				}
 			}
 			if(i.getTurismo().equals(turismo)) {
 				if(i.getFechaDevolucion()==null) {
-					throw new IllegalArgumentException("ERROR: Hay una fecha de devolucion pendiende de este turismo.");
+					throw new OperationNotSupportedException("ERROR: El turismo está actualmente alquilado.");
 				}
-				if(i.getFechaAlquiler().isAfter(fechaAlquiler)) {
+				if(i.getFechaDevolucion().isEqual(fechaAlquiler)) {
 					throw new OperationNotSupportedException("ERROR: El turismo tiene un alquiler posterior.");
 				}
+				if(i.getFechaDevolucion().isAfter(fechaAlquiler)) {
+					throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
+				}
 			}
-			if(i.getFechaDevolucion().isBefore(fechaAlquiler)) {
-				throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
-			}
-			if(i.getFechaDevolucion().isEqual(fechaAlquiler)) {
-				throw new OperationNotSupportedException("ERROR: El cliente tiene el mismo alquiler alquiler");
-			}
+
+
 		}
 	}
 	
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
 		if(alquiler==null) {
-			throw new NullPointerException("ERROR:No puedes insertar un alquiler nulo");
+			throw new NullPointerException("ERROR: No se puede insertar un alquiler nulo.");
 		}
 		comprobarAlquiler(alquiler.getCliente(),alquiler.getTurismo(),alquiler.getFechaAlquiler());
 		coleccionAlquileres.add(alquiler);
 	}
 	
-	public void devolver(Alquiler alquiler,LocalDate fechaDevolucion) {
+	public void devolver(Alquiler alquiler,LocalDate fechaDevolucion) throws OperationNotSupportedException {
 		if(alquiler==null) {
-			throw new NullPointerException("ERROR:No puedes confirmar una devolución si el alquiler es nulo.");
+			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
 		}
 		if(fechaDevolucion==null) {
-			throw new NullPointerException("ERROR:No puedes confirmar una devolución si la fecha es nula");
+			throw new OperationNotSupportedException("ERROR:No puedes confirmar una devolución si la fecha es nula");
 		}
 		if(!coleccionAlquileres.contains(alquiler)) {
-			throw new IllegalArgumentException("ERROR:La devolución no se ha podido realizar porque este alquiler no se encuentra en la lista.");
+			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
 		}
-		buscar(alquiler).setFechaDevolucion(fechaDevolucion);
+		alquiler.devolver(fechaDevolucion);
 	}
 	
 	public Alquiler buscar(Alquiler alquiler) {
 		if(alquiler==null) {
-			throw new NullPointerException("ERROR:No se puede buscar un cliente nulo.");
+			throw new NullPointerException("ERROR: No se puede buscar un alquiler nulo.");
 		}
 		for(Alquiler i:coleccionAlquileres) {
 			if(i.equals(alquiler)) {
@@ -129,14 +134,14 @@ public class Alquileres {
 		return null;
 	}
 	
-	public void borrar(Alquiler alquiler) {
+	public void borrar(Alquiler alquiler) throws OperationNotSupportedException {
 		if(alquiler==null) {
-			throw new NullPointerException("ERROR:No se puede borrar un cliente nulo.");
+			throw new NullPointerException("ERROR: No se puede borrar un alquiler nulo.");
 		}
 		if(!coleccionAlquileres.contains(alquiler)) {
-			throw new IllegalArgumentException("ERROR:No se borrar el cliente ya que no existe en la lista.");
+			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
 		}
-			coleccionAlquileres.add(alquiler);
+			coleccionAlquileres.remove(alquiler);
 		
 	}
 }

@@ -28,11 +28,14 @@ public class Alquiler {
 	
 	public Alquiler(Alquiler a) {
 		if(a==null) {
-			throw new NullPointerException("ERROR:El alquiler no puede ser nulo.");
+			throw new NullPointerException("ERROR: No es posible copiar un alquiler nulo.");
 		}
-		setCliente(a.cliente);
-		setTurismo(a.turismo);
-		setFechaAlquiler(a.fechaAlquiler);
+		setCliente(new Cliente(a.getCliente()));
+		setTurismo(new Turismo(a.getTurismo()));
+		setFechaAlquiler(a.getFechaAlquiler());
+		if(a.getFechaDevolucion()!=null) {
+			setFechaDevolucion(a.getFechaDevolucion());
+		}
 	}
 	
 	
@@ -43,10 +46,10 @@ public class Alquiler {
 	}
 	public void setFechaAlquiler(LocalDate fechaAlquiler) {
 		if(fechaAlquiler==null) {
-			throw new NullPointerException("ERROR: La fecha establecida no puede ser nula.");
+			throw new NullPointerException("ERROR: La fecha de alquiler no puede ser nula.");
 		}
 		if(fechaAlquiler.isAfter(LocalDate.now())) {
-			throw new IllegalArgumentException("La fecha del alquiler no puede ser posterior a la fecha actual.");
+			throw new IllegalArgumentException("ERROR: La fecha de alquiler no puede ser futura.");
 		}
 		this.fechaAlquiler = fechaAlquiler;
 	}
@@ -62,13 +65,13 @@ public class Alquiler {
 			throw new NullPointerException("ERROR: La fecha de devolución no puede ser nula.");
 		}
 		if(fechaDevolucion.isBefore(fechaAlquiler)) {
-			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser anterior a la fecha de alquier.");
+			throw new IllegalArgumentException("ERROR: La fecha de devolución debe ser posterior a la fecha de alquiler.");
 		}
 		if(fechaDevolucion.isEqual(fechaAlquiler)) {
-			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser igual a la fecha de alquiler.");
+			throw new IllegalArgumentException("ERROR: La fecha de devolución debe ser posterior a la fecha de alquiler.");
 		}
 		if(fechaDevolucion.isAfter(LocalDate.now())){
-			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser posterior a hoy.");
+			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser futura.");
 		}
 		this.fechaDevolucion = fechaDevolucion;
 	}
@@ -83,7 +86,8 @@ public class Alquiler {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: El cliente no puede ser nulo.");
 		}
-		this.cliente = cliente;
+
+		this.cliente=cliente;
 	}
 	
 	
@@ -96,7 +100,8 @@ public class Alquiler {
 		if(turismo==null) {
 			throw new NullPointerException("ERROR: El turismo no puede ser nulo.");
 		}
-		this.turismo = turismo;
+
+		this.turismo=turismo;
 	}
 	
 	
@@ -104,10 +109,10 @@ public class Alquiler {
 	
 	public void devolver(LocalDate fechaDevolucion) throws OperationNotSupportedException {
 		if(fechaDevolucion==null) {
-			throw new IllegalArgumentException("ERROR: No se puede devolver una fecha nula.");
+			throw new NullPointerException("ERROR: La fecha de devolución no puede ser nula.");
 		}
 		if(getFechaDevolucion() !=null) {
-			throw new OperationNotSupportedException("ERROR:la fecha de devlucion esta sin confirmar.");
+			throw new OperationNotSupportedException("ERROR: La devolución ya estaba registrada.");
 		}
 		setFechaDevolucion(fechaDevolucion);
 	}
