@@ -43,20 +43,22 @@ public class Cliente {
 		if(nombre==null) {
 			throw new NullPointerException("ERROR: El nombre no puede ser nulo.");
 		}
-		if(nombre.trim().isEmpty()) {
-			throw new IllegalArgumentException("ERROR: El nombre no tiene un formato válido.");
-		}
 		if(!nombre.matches(ER_NOMBRE)) {
 			throw new IllegalArgumentException("ERROR: El nombre no tiene un formato válido.");
 		}
-		String nombreAGuardar="";
-		String [] palabras = nombre.trim().split("\\s");
-		for(String i:palabras) {
-			i.toUpperCase().charAt(0);
-			nombreAGuardar=nombreAGuardar+i+" ";
-		}
-		nombreAGuardar=nombreAGuardar.trim();
-		this.nombre = nombreAGuardar;
+//		if(nombre.trim().isEmpty()) {
+//			throw new IllegalArgumentException("ERROR: El nombre no tiene un formato válido.");
+//		}
+
+//		String nombreAGuardar="";
+//		String [] palabras = nombre.trim().split("\\s");
+//		for(String i:palabras) {
+//			String letraMayus=i.toUpperCase().charAt(0)+"";
+//			
+//			nombreAGuardar+=letraMayus+i.substring(1)+" ";
+//		}
+//		nombreAGuardar=nombreAGuardar.trim();
+		this.nombre = nombre;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio;
+package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,7 +7,8 @@ import java.util.List;
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.*;
-public class Alquileres {
+import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
+public class Alquileres implements IAlquileres {
 
 	
 	//DECLARACION
@@ -24,6 +25,11 @@ public class Alquileres {
 	
 	//METODOS DE CLASE
 	
+	public void comenzar() {
+	}
+	public void terminar() {
+	}
+	@Override
 	public List<Alquiler> get(){
 		List<Alquiler> copia=new ArrayList<>();
 		for(Alquiler i:coleccionAlquileres) {
@@ -32,6 +38,7 @@ public class Alquileres {
 		return copia;
 	}
 	
+	@Override
 	public List<Alquiler> get(Cliente cliente){
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: El cliente del cual deseas obtener una lista no puede ser nulo.");
@@ -44,29 +51,32 @@ public class Alquileres {
 		return alquilerPorCliente;
 	}
 	
-	public List<Alquiler> get(Turismo turismo){
-		if(turismo==null) {
+	@Override
+	public List<Alquiler> get(Vehiculo vehiculo){
+		if(vehiculo==null) {
 			throw new NullPointerException("ERROR:El turismo del cual desea obtener un lista no puede ser nulo.");
 		}
-		List<Alquiler> alquilerPorTurismo=new ArrayList<>();
+		List<Alquiler> alquilerPorVehiculo=new ArrayList<>();
 		for(Alquiler i:coleccionAlquileres) {
-			if(i.getTurismo().equals(turismo)) {
-				alquilerPorTurismo.add(i);
+			if(i.getVehiculo().equals(vehiculo)) {
+				alquilerPorVehiculo.add(i);
 			}
 		}
-		return alquilerPorTurismo;
+		return alquilerPorVehiculo;
 	}
 	
+	@Override
 	public int getCantidad() {
 		return coleccionAlquileres.size();
 
 	}
 	
-	public void comprobarAlquiler(Cliente cliente,Turismo turismo,LocalDate fechaAlquiler)throws OperationNotSupportedException {
+	@Override
+	public void comprobarAlquiler(Cliente cliente,Vehiculo vehiculo,LocalDate fechaAlquiler)throws OperationNotSupportedException {
 		if(cliente==null) {
 			throw new NullPointerException("ERROR: No puede comprobar el alquiler con un cliente nulo.");
 		}
-		if(turismo==null) {
+		if(vehiculo==null) {
 			throw new NullPointerException("ERROR: No puede comprobar el alquiler con un turismo nulo.");
 		}
 		if(fechaAlquiler==null) {
@@ -85,7 +95,7 @@ public class Alquileres {
 					throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
 				}
 			}
-			if(i.getTurismo().equals(turismo)) {
+			if(i.getVehiculo().equals(vehiculo)) {
 				if(i.getFechaDevolucion()==null) {
 					throw new OperationNotSupportedException("ERROR: El turismo está actualmente alquilado.");
 				}
@@ -101,27 +111,69 @@ public class Alquileres {
 		}
 	}
 	
+	@Override
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR: No se puede insertar un alquiler nulo.");
 		}
-		comprobarAlquiler(alquiler.getCliente(),alquiler.getTurismo(),alquiler.getFechaAlquiler());
+		comprobarAlquiler(alquiler.getCliente(),alquiler.getVehiculo(),alquiler.getFechaAlquiler());
 		coleccionAlquileres.add(alquiler);
 	}
 	
-	public void devolver(Alquiler alquiler,LocalDate fechaDevolucion) throws OperationNotSupportedException {
-		if(alquiler==null) {
+	//DEVOLVER
+	
+
+	
+	private Alquiler getAlquilerAbierto(Vehiculo vehiculo) {
+		if(vehiculo==null) {
 			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
 		}
+		for(Alquiler a:get(vehiculo)) {
+			if(a.getFechaDevolucion()==null) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
+	private Alquiler getAlquilerAbierto(Cliente cliente) {
+		if(cliente==null) {
+			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
+		}
+		for(Alquiler a:get(cliente)) {
+			if(a.getFechaDevolucion()==null) {
+				return a;
+			}
+		}
+		return null;
+	}
+	@Override
+	public void devolver(Vehiculo vehiculo,LocalDate fechaDevolucion) throws OperationNotSupportedException {
+
 		if(fechaDevolucion==null) {
 			throw new OperationNotSupportedException("ERROR:No puedes confirmar una devolución si la fecha es nula");
 		}
-		if(!coleccionAlquileres.contains(alquiler)) {
+		Alquiler a =getAlquilerAbierto(vehiculo);
+		if(a==null) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
 		}
-		alquiler.devolver(fechaDevolucion);
+		a.devolver(fechaDevolucion);
 	}
 	
+	public void devolver(Cliente cliente,LocalDate fechaDevolucion) throws OperationNotSupportedException {
+
+		if(fechaDevolucion==null) {
+			throw new OperationNotSupportedException("ERROR:No puedes confirmar una devolución si la fecha es nula");
+		}
+		Alquiler a=getAlquilerAbierto(cliente);
+		
+		if(a==null) {
+			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
+		}
+		a.devolver(fechaDevolucion);
+	}
+	
+	@Override
 	public Alquiler buscar(Alquiler alquiler) {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR: No se puede buscar un alquiler nulo.");
@@ -134,6 +186,7 @@ public class Alquileres {
 		return null;
 	}
 	
+	@Override
 	public void borrar(Alquiler alquiler) throws OperationNotSupportedException {
 		if(alquiler==null) {
 			throw new NullPointerException("ERROR: No se puede borrar un alquiler nulo.");

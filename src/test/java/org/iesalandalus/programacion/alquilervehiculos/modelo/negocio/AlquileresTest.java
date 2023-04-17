@@ -17,6 +17,7 @@ import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Alquileres;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class AlquileresTest {
 	private static LocalDate ayer;
 	private static LocalDate anteayer;
 	private static LocalDate semanaPasada;
-	private Alquileres alquileres;
+	private IAlquileres alquileres;
 
 	@BeforeAll
 	static void setup() {
@@ -68,19 +69,19 @@ public class AlquileresTest {
 		alquileres = new Alquileres();
 		alquiler1 = mock();
 		when(alquiler1.getCliente()).thenReturn(cliente1);
-		when(alquiler1.getTurismo()).thenReturn(turismo1);
+		when(alquiler1.getVehiculo()).thenReturn(turismo1);
 		when(alquiler1.getFechaAlquiler()).thenReturn(semanaPasada);
 		alquiler2 = mock();
 		when(alquiler2.getCliente()).thenReturn(cliente1);
-		when(alquiler2.getTurismo()).thenReturn(turismo2);
+		when(alquiler2.getVehiculo()).thenReturn(turismo2);
 		when(alquiler2.getFechaAlquiler()).thenReturn(ayer);
 		alquiler3 = mock();
 		when(alquiler3.getCliente()).thenReturn(cliente2);
-		when(alquiler3.getTurismo()).thenReturn(turismo2);
+		when(alquiler3.getVehiculo()).thenReturn(turismo2);
 		when(alquiler3.getFechaAlquiler()).thenReturn(ayer);
 		alquiler4 = mock();
 		when(alquiler4.getCliente()).thenReturn(cliente2);
-		when(alquiler4.getTurismo()).thenReturn(turismo1);
+		when(alquiler4.getVehiculo()).thenReturn(turismo1);
 		when(alquiler4.getFechaAlquiler()).thenReturn(ayer);
 	}
 

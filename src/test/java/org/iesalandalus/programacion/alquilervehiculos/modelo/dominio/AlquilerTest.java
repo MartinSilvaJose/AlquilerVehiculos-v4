@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 public class AlquilerTest {
 
 	private static final String MENSAJE_ERROR_CLIENTE_NULO = "ERROR: El cliente no puede ser nulo.";
-	private static final String MENSAJE_ERROR_TURISMO_NULO = "ERROR: El turismo no puede ser nulo.";
+	private static final String MENSAJE_ERROR_TURISMO_NULO = "ERROR: El vehiculo no puede ser nulo.";
 	private static final String MENSAJE_ERROR_FECHA_ALQUILER_NULA = "ERROR: La fecha de alquiler no puede ser nula.";
 	private static final String MENSAJE_ERROR_FECHA_ALQUILER_FUTURA = "ERROR: La fecha de alquiler no puede ser futura.";
 	private static final String MENSAJE_ERROR_FECHA_DEVOLUCION_NULA = "ERROR: La fecha de devolución no puede ser nula.";
@@ -61,6 +61,7 @@ public class AlquilerTest {
 		when(turismo.getModelo()).thenReturn("León");
 		when(turismo.getMatricula()).thenReturn("1234BCD");
 		when(turismo.getCilindrada()).thenReturn(90);
+		when(turismo.getFactorPrecio()).thenReturn(9);
 	}
 	
 	private void setComportamiento(Turismo turismo, String matricula) {
@@ -82,8 +83,8 @@ public class AlquilerTest {
 	void constructorClienteValidoTurismoValidoFechaAlquilerValidaCreaAlquilerCorrectamente() {
 		alquilerHoy = new Alquiler(cliente, turismo, hoy);
 		assertSame(cliente, alquilerHoy.getCliente());
-		assertEquals(turismo, alquilerHoy.getTurismo());
-		assertSame(turismo, alquilerHoy.getTurismo());
+		assertEquals(turismo, alquilerHoy.getVehiculo());
+		assertSame(turismo, alquilerHoy.getVehiculo());
 		assertEquals(hoy, alquilerHoy.getFechaAlquiler());
 		assertNull(alquilerHoy.getFechaDevolucion());
 		assertEquals(0, alquilerHoy.getPrecio());
@@ -117,7 +118,7 @@ public class AlquilerTest {
 		assertDoesNotThrow(() -> alquilerAyer.devolver(hoy));
 		Alquiler alquilerCopia = new Alquiler(alquilerAyer);
 		assertNotSame(cliente, alquilerCopia.getCliente());
-		assertNotSame(turismo, alquilerCopia.getTurismo());
+		assertNotSame(turismo, alquilerCopia.getVehiculo());
 		assertEquals(ayer, alquilerCopia.getFechaAlquiler());
 		assertEquals(hoy, alquilerCopia.getFechaDevolucion());
 		assertEquals(alquilerAyer.getPrecio(), alquilerCopia.getPrecio());

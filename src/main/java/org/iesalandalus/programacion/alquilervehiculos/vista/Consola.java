@@ -5,8 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
@@ -17,17 +20,17 @@ public class Consola {
 		
 	}
 	
-	public static void mostrarCabecera() {
-		System.out.println("PROGRAMA DE ALQUILER DE COCHES");
+	public static void mostrarCabecera(String mensaje) {
+		System.out.println(mensaje);
 		System.out.println("------------------------------");
 	}
 	
 	public static void mostrarMenu() {
-		System.out.println("Administrador de alquileres, clientes y turismos.");
-		for(Opcion opcion:Opcion.values()) {
+		for(Accion opcion:Accion.values()) {
 			System.out.println(opcion);
 		}
 	}
+	
 	private static String leerCadena(String mensaje) {
 		System.out.println(mensaje);
 		String cadenaIntroducida=Entrada.cadena();
@@ -45,19 +48,20 @@ public class Consola {
 			fechaIntroducida=Entrada.cadena();
 		}while(!fechaIntroducida.matches(PATRON_FECHA));
 		
-		LocalDate fechaCorrecta=LocalDate.parse(fechaIntroducida);
+		LocalDate fechaCorrecta=LocalDate.parse(fechaIntroducida, FORMATO_FECHA);
 		fechaCorrecta.format(FORMATO_FECHA);
 		return fechaCorrecta;
 	}
-	public static Opcion elegirOpcion(){
+	public static Accion elegirOpcion(){
 		int opcionElegida=-1;
 		do {
 			opcionElegida=leerEntero("Introduzca la opción a elegir.");
-		}while(opcionElegida>Opcion.values().length || opcionElegida<0);
+		}while(opcionElegida>Accion.values().length || opcionElegida<0);
 		
-		return Opcion.get(opcionElegida);
+		return Accion.get(opcionElegida);
 		
 	}
+	
 	public static Cliente leerCliente() {
 		String dni=leerCadena("Introduza el dni del cliente.");
 		String nombre=leerNombre();
@@ -67,6 +71,10 @@ public class Consola {
 		return cliente;
 	}
 	
+	public static Vehiculo leerVehiculo(){
+		mostrarMenuTiposVehiculos();
+		return leerVehiculo(elegirTipoVehiculo());
+	}
 	public static Cliente leerClienteDni() {
 		return Cliente.getClienteConDni(leerCadena("Introduce el dni."));
 	}
@@ -79,23 +87,24 @@ public class Consola {
 		String telefono=leerCadena("Introduzca el telefono.");
 		return telefono;
 	}
-	public static Turismo leerTurismo() {
-		String marca=leerCadena("Introduzca la marca.");
-		String modelo=leerCadena("Introduzca el modelo.");
-		String matricula=leerCadena("Introduzca la matricula.");
-		int cilindrada=leerEntero("Introduzca la cilindrada.");
-		Turismo turismo= new Turismo(marca,modelo,cilindrada,matricula);
-		return turismo;
+
+	public static Vehiculo leerVehiculoMatricula() {
+		return Vehiculo.getVehiculoConMatricula(leerCadena("Introduce la matricula."));
 	}
 	
-	public static Turismo leerTurismoMatricula() {
-		return Turismo.getTurismoConMatricula(leerCadena("Introduce la matricula."));
-	}
 	public static Alquiler leerAlquiler() {
-		Cliente cliente=new Cliente(leerClienteDni());
-		Turismo turismo=new Turismo(leerTurismoMatricula());
+		Cliente cliente=leerClienteDni();
+		Vehiculo vehiculo=leerVehiculoMatricula();
 		LocalDate fecha=leerFecha("Introduzca la fecha de alquiler");
-		Alquiler alquiler=new Alquiler(cliente, turismo, fecha);
+		
+		if(TipoVehiculo.get(vehiculo).equals(TipoVehiculo.TURISMO)) {
+			vehiculo=new Turismo((Turismo)vehiculo);
+		}else if(TipoVehiculo.get(vehiculo).equals(TipoVehiculo.AUTOBUS)) {
+			vehiculo=new Autobus((Autobus)vehiculo);
+		}else if(TipoVehiculo.get(vehiculo).equals(TipoVehiculo.FURGONETA)) {
+			vehiculo=new Furgoneta((Furgoneta)vehiculo);
+		}
+		Alquiler alquiler=new Alquiler(cliente, vehiculo, fecha);
 		return alquiler;
 	}
 	public static LocalDate leerFechaDevolucion() {
@@ -103,4 +112,51 @@ public class Consola {
 		return fechaDevolucion;
 	}
 	
+	private static void mostrarMenuTiposVehiculos() {
+		for(TipoVehiculo tipo:TipoVehiculo.values()) {
+			System.out.println(tipo);
+		}
+	}
+	
+	private static TipoVehiculo elegirTipoVehiculo() {
+		return TipoVehiculo.get(leerEntero("Especifique el tipo de vehículo"));
+	}
+	
+	private static Vehiculo leerVehiculo(TipoVehiculo tipo) {
+		if(tipo==null) {
+			throw new NullPointerException("El tipo del vehículo no puede ser nulo.");
+		}
+		Vehiculo vehiculo=null;
+		
+		if(tipo.equals(TipoVehiculo.TURISMO)) {
+			String marca=leerCadena("Introduzca la marca.");
+			String modelo=leerCadena("Introduzca el modelo.");
+			String matricula=leerCadena("Introduzca la matricula.");
+			int cilindrada=leerEntero("Introduzca la cilindrada.");
+			vehiculo=new Turismo(marca, modelo, cilindrada, matricula);
+		}
+		
+		if(tipo.equals(TipoVehiculo.AUTOBUS)) {
+			String marca=leerCadena("Introduzca la marca.");
+			String modelo=leerCadena("Introduzca el modelo.");
+			String matricula=leerCadena("Introduzca la matricula.");
+			int plazas=leerEntero("Introduce el numero de plazas.");
+			vehiculo=new Autobus(marca, modelo, plazas, matricula);
+		}
+		if(tipo.equals(TipoVehiculo.FURGONETA)) {
+			String marca=leerCadena("Introduzca la marca.");
+			String modelo=leerCadena("Introduzca el modelo.");
+			String matricula=leerCadena("Introduzca la matricula.");
+			int plazas=leerEntero("Introduce el numero de plazas.");
+			int pma=leerEntero("Introduce el peso máximo autorizado.");
+			vehiculo=new Furgoneta(marca, modelo, plazas, pma, matricula);
+		}
+		return vehiculo;
+	}
+	
+	public static LocalDate leerMes() {
+		return leerFecha("Introduzca la fecha completa del mes a obtener");
+		
+		
+	}
 }

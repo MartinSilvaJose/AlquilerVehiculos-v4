@@ -14,6 +14,7 @@ import java.util.List;
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Vehiculos;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ public class TurismosTest {
 
 	private static Turismo turismo1;
 	private static Turismo turismo2;
-	private Turismos turismos;
+	private IVehiculos turismos;
 
 	@BeforeAll
 	public static void setup() {
@@ -40,7 +41,7 @@ public class TurismosTest {
 	
 	@BeforeEach
 	void init() {
-		turismos = new Turismos();
+		turismos = new Vehiculos();
 	}
 
 	@Test

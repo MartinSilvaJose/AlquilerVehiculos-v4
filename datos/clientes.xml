@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Clientes>
+    <Cliente Dni="12345678Z">
+        <Nombre TipoDato="String">Luis</Nombre>
+        <Telefono TipoDato="String">950123456</Telefono>
+    </Cliente>
+</Clientes>

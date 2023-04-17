@@ -1,45 +1,45 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 import java.util.Objects;
-public class Turismo extends Vehiculo{
+public class Autobus extends Vehiculo{
 	
 	
 	//DECLARACIÓN
-	private final int FACTOR_CILINDRADA=10;
-	private int cilindrada;
+	private final int FACTOR_PLAZAS=2;
+	private int plazas;
 	
 	
 	//CONSTRUCTORES
 	
-	public Turismo(String marca,String modelo,int cilindrada,String matricula) {
+	public Autobus(String marca,String modelo,int plazas,String matricula) {
 		super(marca,modelo,matricula);
-		setCilindrada(cilindrada);
+		setPlazas(plazas);
 	}
 	
-	public Turismo(Turismo t) {
-		super(t);
-		setCilindrada(t.getCilindrada());
+	public Autobus(Autobus a) {
+		super(a);
+		setPlazas(a.getPlazas());
 
 	}
 	
 	//CILINDRADA
 	
-	public int getCilindrada() {
-		return cilindrada;
+	public int getPlazas() {
+		return plazas;
 	}
-	public void setCilindrada(int cilindrada) {
-		if(cilindrada<1 || cilindrada>5000) {
-			throw new IllegalArgumentException("ERROR: La cilindrada no es correcta.");
+	public void setPlazas(int plazas) {
+		if(plazas<9 || plazas>256) {
+			throw new IllegalArgumentException("ERROR: El número de plazas no se corresponde con un autobus");
 		}
 		
-		this.cilindrada = cilindrada;
+		this.plazas = plazas;
 	}
 	
 	
 	//METODOS DE CLASE
 	@Override
 	protected int getFactorPrecio() {
-		int precio=this.cilindrada/FACTOR_CILINDRADA;
+		int precio=this.plazas*FACTOR_PLAZAS;
 		return precio;
 	}
 	
@@ -59,7 +59,7 @@ public class Turismo extends Vehiculo{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Turismo other = (Turismo) obj;
+		Autobus other = (Autobus) obj;
 		return Objects.equals(super.getMatricula(), other.getMatricula());
 	}
 
@@ -68,7 +68,7 @@ public class Turismo extends Vehiculo{
 	
 	@Override
 	public String toString() {
-		return String.format("%s %s (%sCV) - %s", super.getMarca(), super.getModelo(), this.cilindrada, super.getMatricula(), "disponible");
+		return String.format("%s %s (%s Plazas) - %s", super.getMarca(), super.getModelo(), this.plazas, super.getMatricula(), "disponible");
 	}
 
 }

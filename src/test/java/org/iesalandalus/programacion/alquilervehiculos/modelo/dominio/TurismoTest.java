@@ -114,27 +114,27 @@ public class TurismoTest {
 	
 	@Test
 	void getTurismoConMatriculaValidaDevuelveTurismoConDichaMatricula() {
-		Turismo turismo = Turismo.getTurismoConMatricula(MATRICULA_VALIDA);
+		Turismo turismo = Turismo.getVehiculoConMatricula(MATRICULA_VALIDA);
 		assertEquals(MATRICULA_VALIDA, turismo.getMatricula());
 	}
 	
 	@Test
 	void getTurismoConMatriculaNoValidaLanzaExcepcion() {
-		NullPointerException npe = assertThrows(NullPointerException.class, () -> Turismo.getTurismoConMatricula(null));
+		NullPointerException npe = assertThrows(NullPointerException.class, () -> Turismo.getVehiculoConMatricula(null));
 		assertEquals(MENSAJE_ERROR_MATRICULA_NULA, npe.getMessage());
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> Turismo.getTurismoConMatricula("1234bcd"));
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> Turismo.getVehiculoConMatricula("1234bcd"));
 		assertEquals(MENSAJE_ERROR_FORMATO_MATRICULA_NO_VALIDA, iae.getMessage());
-		iae = assertThrows(IllegalArgumentException.class, () -> Turismo.getTurismoConMatricula("1234ABC"));
+		iae = assertThrows(IllegalArgumentException.class, () -> Turismo.getVehiculoConMatricula("1234ABC"));
 		assertEquals(MENSAJE_ERROR_FORMATO_MATRICULA_NO_VALIDA, iae.getMessage());
-		iae = assertThrows(IllegalArgumentException.class, () -> Turismo.getTurismoConMatricula("1234BC"));
+		iae = assertThrows(IllegalArgumentException.class, () -> Turismo.getVehiculoConMatricula("1234BC"));
 		assertEquals(MENSAJE_ERROR_FORMATO_MATRICULA_NO_VALIDA, iae.getMessage());
-		iae = assertThrows(IllegalArgumentException.class, () -> Turismo.getTurismoConMatricula("234BCD"));
+		iae = assertThrows(IllegalArgumentException.class, () -> Turismo.getVehiculoConMatricula("234BCD"));
 		assertEquals(MENSAJE_ERROR_FORMATO_MATRICULA_NO_VALIDA, iae.getMessage());
 	}
 	
 	@Test
 	void equalsYHasCodeConsistentes() {
-		Turismo turismoIgual = Turismo.getTurismoConMatricula(MATRICULA_VALIDA);
+		Turismo turismoIgual = Turismo.getVehiculoConMatricula(MATRICULA_VALIDA);
 		assertEquals(turismo, turismo);
 		assertEquals(turismo, turismoIgual);
 		assertEquals(turismoIgual, turismo);
