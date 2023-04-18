@@ -40,15 +40,7 @@ public abstract class Vehiculo {
 		if(marca==null) {
 			throw new NullPointerException("ERROR: La marca no puede ser nula.");
 		}
-//		boolean marcaEncontrada=false;
-//		for(String i : ER_MARCA) {
-//			if(marca.equals(i)) {
-//				marcaEncontrada=true;
-//			}
-//		}
-//		if(marcaEncontrada==false) {
-//			throw new IllegalArgumentException("ERROR: La marca no tiene un formato válido.");
-//		}
+
 		if(!marca.matches(ER_MARCA)) {
 			throw new IllegalArgumentException("ERROR: La marca no tiene un formato válido");
 		}

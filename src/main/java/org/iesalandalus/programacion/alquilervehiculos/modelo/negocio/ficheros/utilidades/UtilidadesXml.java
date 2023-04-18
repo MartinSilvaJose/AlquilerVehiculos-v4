@@ -92,52 +92,6 @@ public class UtilidadesXml {
     }
 
     /**
-     * Convierte una cadena que contiene un documento XML a un �rbol DOM.
-     * @param documentoXML cadena que contiene el documento XML.
-     * @return El �rbol DOM o null si no se ha podido convertir.
-     */
-//    public static Document stringToDom (String documentoXML)  {
-//        ByteArrayInputStream bais=new ByteArrayInputStream(documentoXML.getBytes());
-//        Document doc=null;
-//        try {
-//            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-//            DocumentBuilder db = dbf.newDocumentBuilder();
-//            doc=db.parse(bais);            
-//           
-//        } catch (Exception ex) {
-//            Logger.getLogger(UtilidadesXml.class.getName()).log(Level.SEVERE, null, ex);
-//        }        
-//        return doc;
-//    }
-//    
-    /**
-     * Convierte un �rbol DOM a una cadena que contiene un documento XML.
-     * @param doc �rbol DOM.
-     * @return null si no se ha podido convertir o la cadena con el documento
-     * en XML si se ha podido convertir.
-     */
-//    public static void domToXml (Document doc, String rutaXml)  {
-//        String xmlString=null;
-//        try {
-//            TransformerFactory tFactory = TransformerFactory.newInstance();
-//            tFactory.setAttribute("indent-number", new Integer(2));
-//            Transformer transformer = tFactory.newTransformer();
-//       
-//            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-//            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");            
-//            StreamResult result = new StreamResult(new StringWriter());
-//             
-//            DOMSource source = new DOMSource(doc);
-//            transformer.transform(source, result);
-//            xmlString = result.getWriter().toString();
-//        } catch (TransformerException ex) {
-//            Logger.getLogger(UtilidadesXml.class.getName()).log(Level.SEVERE, null, ex);
-//            xmlString=null;
-//        }
-//        return xmlString;
-//    }
-    
-    /**
      * Convierte un �rbol DOM a XML y lo guarda en un archivo.
      * @param doc Documento a convertir en XML.
      * @param CaminoAlArchivoXML Camino o path para llegar al archivo en el
@@ -148,13 +102,11 @@ public class UtilidadesXml {
     public static void domToXml (Document doc, String CaminoAlArchivoXML) {
         try {
             TransformerFactory tFactory=TransformerFactory.newInstance();
-//            tFactory.setAttribute("indent-number", new Integer(4));
             Transformer transformer = tFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
            
-//            FileOutputStream fos =new FileOutputStream(f); 
             File f=new File(CaminoAlArchivoXML);
             StreamResult result = new StreamResult(f);  
             DOMSource source = new DOMSource(doc);

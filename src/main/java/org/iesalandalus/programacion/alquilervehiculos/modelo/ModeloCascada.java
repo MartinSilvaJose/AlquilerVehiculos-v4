@@ -87,8 +87,8 @@ public class ModeloCascada extends Modelo{
 	
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 		List<Alquiler> alquilerPorCliente=alquileres.get(cliente);
-		for(Alquiler i:alquileres.get(cliente)) {
-			alquilerPorCliente.remove(i);
+		for(Alquiler i:alquilerPorCliente) {
+			alquileres.borrar(i);
 		}
 		clientes.borrar(cliente);
 	}
@@ -96,7 +96,7 @@ public class ModeloCascada extends Modelo{
 	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		List<Alquiler> alquilerPorVehiculo=alquileres.get(vehiculo);
 		for(Alquiler i:alquilerPorVehiculo) {
-			alquilerPorVehiculo.remove(i);
+			alquileres.borrar(i);
 		}
 		vehiculos.borrar(vehiculo);
 	}

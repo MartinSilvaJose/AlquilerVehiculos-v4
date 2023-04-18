@@ -227,7 +227,7 @@ public class VistaTexto extends Vista {
 	protected void devolverAlquilerCliente() {
 		Consola.mostrarCabecera("Devolver alquiler cliente");
 		try {
-			controlador.devolver(Consola.leerClienteDni(),Consola.leerFechaDevolucion());
+			controlador.devolver(controlador.buscar(Consola.leerClienteDni()) ,Consola.leerFechaDevolucion());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -237,7 +237,7 @@ public class VistaTexto extends Vista {
 	protected void devolverAlquilerVehiculo() {
 		Consola.mostrarCabecera("Devolver alquiler vehículo");
 		try {
-			controlador.devolver(Consola.leerVehiculo(),Consola.leerFechaDevolucion());
+			controlador.devolver(controlador.buscar(Consola.leerVehiculoMatricula()),Consola.leerFechaDevolucion());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -335,7 +335,7 @@ public class VistaTexto extends Vista {
 	protected void listarAlquileresCliente() {
 		Consola.mostrarCabecera("Listar alquileres por clientes");
 		try {
-			controlador.getAlquileres(Consola.leerClienteDni());
+			System.out.println(controlador.getAlquileres(controlador.buscar(Consola.leerClienteDni())));
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
@@ -344,7 +344,7 @@ public class VistaTexto extends Vista {
 	protected void listarAlquileresVehiculo() {
 		Consola.mostrarCabecera("Listar alquileres por vehiculo");
 		try {
-			controlador.getAlquileres(Consola.leerVehiculoMatricula());
+			System.out.println(controlador.getAlquileres(controlador.buscar(Consola.leerVehiculoMatricula())));
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		}

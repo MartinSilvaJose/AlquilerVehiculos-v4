@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Vehiculos>
-    <Vehiculo Matricula="8334JGW" Tipo="Turismo">
-        <Marca TipoDato="String">Renault</Marca>
-        <Modelo TipoDato="String">Megane</Modelo>
-        <Turismo>
-            <Cilindrada TipoDato="Integer">1600</Cilindrada>
-        </Turismo>
-    </Vehiculo>
     <Vehiculo Matricula="8335JGW" Tipo="Autobus">
         <Marca TipoDato="String">Artobus</Marca>
         <Modelo TipoDato="String">DelPino</Modelo>
@@ -35,5 +28,12 @@
         <Turismo>
             <Cilindrada TipoDato="Integer">2000</Cilindrada>
         </Turismo>
+    </Vehiculo>
+    <Vehiculo Matricula="1234BCD" Tipo="Autobus">
+        <Marca TipoDato="String">Longo</Marca>
+        <Modelo TipoDato="String">Arto</Modelo>
+        <Autobus>
+            <Plazas TipoDato="Integer">100</Plazas>
+        </Autobus>
     </Vehiculo>
 </Vehiculos>

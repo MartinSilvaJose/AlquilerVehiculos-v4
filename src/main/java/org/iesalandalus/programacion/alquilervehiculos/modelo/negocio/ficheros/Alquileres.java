@@ -11,7 +11,6 @@ import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.*;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros.utilidades.UtilidadesXml;
-import org.iesalandalus.programacion.alquilervehiculos.vista.TipoVehiculo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -164,7 +163,7 @@ public class Alquileres implements IAlquileres {
 		}
 		List<Alquiler> alquilerPorVehiculo=new ArrayList<>();
 		for(Alquiler i:coleccionAlquileres) {
-			if(i.getVehiculo().equals(vehiculo)) {
+			if(i.getVehiculo().getMatricula().equals(vehiculo.getMatricula())) {
 				alquilerPorVehiculo.add(i);
 			}
 		}

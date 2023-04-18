@@ -13,8 +13,8 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
-	private static String PATRON_FECHA="(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/([0-9]{4})";
-	private static DateTimeFormatter FORMATO_FECHA=DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static final String PATRON_FECHA="(0[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/([0-9]{4})";
+	private static final DateTimeFormatter FORMATO_FECHA=DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	private Consola() {
 		
@@ -45,12 +45,16 @@ public class Consola {
 		System.out.println(mensaje);
 		String fechaIntroducida;
 		do {
+			System.out.println("El formato debe ser dd/MM/yyyy");
 			fechaIntroducida=Entrada.cadena();
 		}while(!fechaIntroducida.matches(PATRON_FECHA));
 		
-		LocalDate fechaCorrecta=LocalDate.parse(fechaIntroducida, FORMATO_FECHA);
-		fechaCorrecta.format(FORMATO_FECHA);
-		return fechaCorrecta;
+	    try {
+	        return LocalDate.parse(fechaIntroducida, FORMATO_FECHA);
+
+	    } catch (DateTimeParseException e) {
+	        throw new IllegalArgumentException("ERROR: La fecha no cumple con el formato deseados --> dd/MM/yyyy");
+	    }
 	}
 	public static Accion elegirOpcion(){
 		int opcionElegida=-1;
@@ -95,7 +99,7 @@ public class Consola {
 	public static Alquiler leerAlquiler() {
 		Cliente cliente=leerClienteDni();
 		Vehiculo vehiculo=leerVehiculoMatricula();
-		LocalDate fecha=leerFecha("Introduzca la fecha de alquiler");
+		LocalDate fecha=leerFecha("Introduzca la fecha de alquiler.");
 		
 		if(TipoVehiculo.get(vehiculo).equals(TipoVehiculo.TURISMO)) {
 			vehiculo=new Turismo((Turismo)vehiculo);

@@ -1,6 +1,5 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 import java.io.File;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,7 +211,7 @@ public class Vehiculos implements IVehiculos {
 			throw new NullPointerException("ERROR: No se puede buscar un vehículo nulo.");
 		}
 		for(Vehiculo i:coleccionVehiculos) {
-			if(vehiculo.equals(i)) {
+			if(vehiculo.getMatricula().equals(i.getMatricula())) {
 				return i;
 			}
 
