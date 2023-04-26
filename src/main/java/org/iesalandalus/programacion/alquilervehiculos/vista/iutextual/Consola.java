@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.alquilervehiculos.vista;
+package org.iesalandalus.programacion.alquilervehiculos.vista.iutextual;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +10,7 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
+import org.iesalandalus.programacion.alquilervehiculos.vista.TipoVehiculo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {

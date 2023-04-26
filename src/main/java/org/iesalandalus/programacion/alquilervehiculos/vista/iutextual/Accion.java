@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.alquilervehiculos.vista;
+package org.iesalandalus.programacion.alquilervehiculos.vista.iutextual;
 
 public enum Accion {
 	SALIR("Salir"),

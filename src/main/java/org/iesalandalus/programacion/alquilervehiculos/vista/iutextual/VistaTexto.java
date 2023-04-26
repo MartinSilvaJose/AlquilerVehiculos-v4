@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.alquilervehiculos.vista;
+package org.iesalandalus.programacion.alquilervehiculos.vista.iutextual;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,6 +11,8 @@ import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
+import org.iesalandalus.programacion.alquilervehiculos.vista.TipoVehiculo;
+import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class VistaTexto extends Vista {	
 	
