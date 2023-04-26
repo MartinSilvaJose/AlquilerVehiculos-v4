@@ -8,13 +8,12 @@ import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 import org.iesalandalus.programacion.alquilervehiculos.vista.VistaTexto;
 
 public class MainApp {
-//	VERSION 1
+
 	public static void main(String[] args) {
 		Modelo modelo=new ModeloCascada(new FuenteDatosFicheros());
 		Vista vista=new VistaTexto();
 		Controlador controlador= new Controlador(modelo,vista);
 		controlador.comenzar();
-		//Se me escucha?s
 	}
 
 }
