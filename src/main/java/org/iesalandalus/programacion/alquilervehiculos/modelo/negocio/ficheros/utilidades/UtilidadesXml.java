@@ -37,13 +37,8 @@
 //}
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros.utilidades;
 
-import java.io.ByteArrayInputStream;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
