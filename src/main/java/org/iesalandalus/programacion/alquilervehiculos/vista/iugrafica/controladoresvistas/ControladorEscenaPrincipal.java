@@ -30,3 +30,5 @@ public class ControladorEscenaPrincipal {
     void insertarPersona(ActionEvent event) {
 
     }
+}
+
