@@ -14,6 +14,7 @@ public class MainApp {
 		Vista vista=new VistaTexto();
 		Controlador controlador= new Controlador(modelo,vista);
 		controlador.comenzar();
+		//Se me escucha?s
 	}
 
 }
