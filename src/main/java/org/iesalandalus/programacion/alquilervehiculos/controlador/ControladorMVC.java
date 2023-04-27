@@ -11,11 +11,11 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.IVista;
 
-public class Controlador {
+public class ControladorMVC implements IControlador {
 	private IVista vista;
 	private Modelo modelo;
 	
-	public Controlador(Modelo modelo,IVista vista) {
+	public ControladorMVC(Modelo modelo,IVista vista) {
 		if(modelo==null) {
 			throw new NullPointerException("ERROR: El modelo no puede ser nulo");
 		}
@@ -29,79 +29,98 @@ public class Controlador {
 	
 	
 	//	COMENZAR Y TERMINAR 
+	@Override
 	public void comenzar() {
 		modelo.comenzar();
 		vista.comenzar();
 	}
+	@Override
 	public void terminar() {
 		modelo.terminar();
 	}
 
 	
 	//	INSERTAR
+	@Override
 	public void insertar(Cliente cliente)throws OperationNotSupportedException {
 		modelo.insertar(cliente);
 	}
+	@Override
 	public void insertar(Vehiculo vehiculo)throws OperationNotSupportedException {
 		modelo.insertar(vehiculo);
 	}
+	@Override
 	public void insertar(Alquiler alquiler)throws OperationNotSupportedException {
 		modelo.insertar(alquiler);
 	}
 	
 	
 	//	BUSCAR
+	@Override
 	public Cliente buscar(Cliente cliente) {
 		return modelo.buscar(cliente);
 		
 	}
+	@Override
 	public Vehiculo buscar(Vehiculo vehiculo) {
 		return modelo.buscar(vehiculo);
 	}
+	@Override
 	public Alquiler buscar(Alquiler alquiler) {
 		return modelo.buscar(alquiler);
 	}
 	
 	
 	// MODIFICAR Y DEVOLVER
+	@Override
 	public void modificar(Cliente cliente, String nombre, String telefono)throws OperationNotSupportedException {
 		modelo.modificar(cliente, nombre, telefono);
 	}
+	@Override
 	public void devolver(Cliente cliente,LocalDate fechaDevolucion)throws OperationNotSupportedException {
 		modelo.devolver(cliente, fechaDevolucion);
 	}
+	@Override
 	public void devolver(Vehiculo vehiculo,LocalDate fechaDevolucion)throws OperationNotSupportedException {
 		modelo.devolver(vehiculo, fechaDevolucion);
 	}
 	
 	//BORRAR
+	@Override
 	public void borrar(Cliente cliente)throws OperationNotSupportedException {
 		modelo.borrar(cliente);
 	}
+	@Override
 	public void borrar(Vehiculo vehiculo)throws OperationNotSupportedException {
 		modelo.borrar(vehiculo);
 	}
+	@Override
 	public void borrar(Alquiler alquiler)throws OperationNotSupportedException {
 		modelo.borrar(alquiler);
 	}
 	
 	
 	//	LISTAR
+	@Override
 	public List<Cliente> getClientes(){
 		return modelo.getClientes();
 	}
+	@Override
 	public List<Vehiculo> getVehiculo(){
 		return modelo.getVehiculos();
 	}
+	@Override
 	public List<Alquiler> getAlquileres(){
 		return modelo.getAlquileres();
 	}
 	
 	
 	//	LISTAR CON PARAMETROS
+	@Override
 	public List<Alquiler> getAlquileres(Cliente cliente){
 		return modelo.getAlquileres(cliente);
 	}
+	@Override
 	public List<Alquiler> getAlquileres(Vehiculo vehiculo){
 		return modelo.getAlquileres(vehiculo);
 	}

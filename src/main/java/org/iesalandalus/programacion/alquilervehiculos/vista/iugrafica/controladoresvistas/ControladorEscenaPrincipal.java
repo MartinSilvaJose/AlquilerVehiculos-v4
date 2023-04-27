@@ -1,5 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica.controladoresvistas;
 
+import org.iesalandalus.programacion.alquilervehiculos.controlador.IControlador;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,7 +9,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ControladorEscenaPrincipal {
+	private IControlador controladorMVC;
 	
+	@FXML
+	private void initialize() {
+		System.out.println("Llaamada a incialice");
+	}
+    public void setControladorMVC(IControlador controlador) 
+    {           
+        controladorMVC = controlador;        
+    }
     @FXML
     private Button btnCInsertar;
 

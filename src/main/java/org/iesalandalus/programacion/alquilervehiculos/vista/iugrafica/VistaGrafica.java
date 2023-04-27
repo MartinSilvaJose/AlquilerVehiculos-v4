@@ -1,40 +1,83 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica;
 
-import org.iesalandalus.programacion.alquilervehiculos.controlador.Controlador;
+import org.iesalandalus.programacion.alquilervehiculos.controlador.IControlador;
 import org.iesalandalus.programacion.alquilervehiculos.vista.IVista;
+import org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica.controladoresvistas.ControladorEscenaPrincipal;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class VistaGrafica extends Application implements IVista {
 
-	private Controlador controladorMVC;
+	private IControlador controladorMVC;
+	private static VistaGrafica instancia=null;
 	
-	@Override
-	public void setControlador(Controlador controlador) {
-		if(controlador==null) {
-			throw new NullPointerException("No puedes pasar un controlador nulo.");
-		}
-		this.controladorMVC=controlador;
-	}
+    public VistaGrafica()
+    {
+        if (instancia != null) 
+        {
+            controladorMVC = instancia.controladorMVC;
+        } 
+        else 
+        {
+            instancia = this;
+        }
+    }
+	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("iugVentanas.css").toExternalForm());
-			primaryStage.setScene(scene);
+//			Escenario Principal
+			FXMLLoader loader=new FXMLLoader(getClass().getResource("vistas/EscenaPrincipal.fxml"));
+			System.out.println("LLamada al load");
+			Parent raiz=loader.load();
+			System.out.println("Antes de set controlador");
+			ControladorEscenaPrincipal controlador=loader.getController();
+			controlador.setControladorMVC(controladorMVC);
+			
+			Scene escena =new Scene(raiz);
+			primaryStage.setOnCloseRequest(e -> confirmarSalida(primaryStage, e));
+			primaryStage.setTitle("Administración de alquiler de coches");
+			primaryStage.setScene(escena);
+			primaryStage.setResizable(false);
 			primaryStage.show();
+					
+			
+//			ventana vacía
+//			BorderPane root = new BorderPane();
+//			Scene scene = new Scene(root,400,400);
+//			scene.getStylesheets().add(getClass().getResource("iugVentanas.css").toExternalForm());
+//			primaryStage.setScene(scene);
+//			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	private void confirmarSalida(Stage primaryStage, WindowEvent e) {
+		if (org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica.utilidades.Dialogos.mostrarDialogoConfirmacion("Salir", "¿Estás seguro de que quieres salir de la aplicación?", primaryStage)) {
+			this.controladorMVC.terminar();
+			primaryStage.close();
+		}
+		else
+			e.consume();	
 	}
 	@Override
 	public void comenzar() {
 		launch(this.getClass());
 		
+	}
+	@Override
+	public void setControlador(IControlador controlador) {
+		if(controlador==null) {
+			throw new NullPointerException("No puedes pasar un controlador nulo.");
+		}
+		this.controladorMVC=controlador;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
 
-import org.iesalandalus.programacion.alquilervehiculos.controlador.Controlador;
+import org.iesalandalus.programacion.alquilervehiculos.controlador.IControlador;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
@@ -18,9 +18,9 @@ import org.iesalandalus.programacion.alquilervehiculos.vista.IVista;
 public class VistaTexto implements IVista {	
 	
 	//Lo que anteriormente se heredaba de Vista.
-	private Controlador controlador;
+	private IControlador controlador;
 	
-	public void setControlador(Controlador controlador) {
+	public void setControlador(IControlador controlador) {
 		if(controlador==null) {
 			throw new NullPointerException("No puedes pasar un controlador nulo.");
 		}

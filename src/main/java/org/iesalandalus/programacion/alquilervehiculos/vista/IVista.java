@@ -4,7 +4,7 @@ import org.iesalandalus.programacion.alquilervehiculos.controlador.*;
 
 public interface IVista {
 	
-	public void setControlador(Controlador controlador);
+	public void setControlador(IControlador controlador);
 	
 	public abstract void comenzar();
 	
