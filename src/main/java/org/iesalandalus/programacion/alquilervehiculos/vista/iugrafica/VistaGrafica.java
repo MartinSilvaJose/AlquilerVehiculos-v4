@@ -1,7 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica;
 
 import org.iesalandalus.programacion.alquilervehiculos.controlador.IControlador;
-import org.iesalandalus.programacion.alquilervehiculos.vista.IVista;
+import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 import org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica.controladoresvistas.ControladorEscenaPrincipal;
 
 import javafx.application.Application;
@@ -12,9 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class VistaGrafica extends Application implements IVista {
+public class VistaGrafica extends Vista {
 
-	private IControlador controladorMVC;
 	private static VistaGrafica instancia=null;
 	
     public VistaGrafica()

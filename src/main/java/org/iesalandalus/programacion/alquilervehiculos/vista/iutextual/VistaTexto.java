@@ -13,19 +13,12 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.TipoVehiculo;
-import org.iesalandalus.programacion.alquilervehiculos.vista.IVista;
+import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
-public class VistaTexto implements IVista {	
+import javafx.stage.Stage;
+
+public class VistaTexto extends Vista {	
 	
-	//Lo que anteriormente se heredaba de Vista.
-	private IControlador controlador;
-	
-	public void setControlador(IControlador controlador) {
-		if(controlador==null) {
-			throw new NullPointerException("No puedes pasar un controlador nulo.");
-		}
-		this.controlador=controlador;
-	}
 	//CONSTRUCTOR
 	public VistaTexto() {
 		
@@ -38,7 +31,7 @@ public class VistaTexto implements IVista {
 		ejecutar(Consola.elegirOpcion());
 	}
 	public void terminar() {
-		controlador.terminar();
+		controladorMVC.terminar();
 		System.out.println("Hasta la próxima.");
 	}
 	
@@ -149,7 +142,7 @@ public class VistaTexto implements IVista {
 	protected void insertarCliente() {
 		Consola.mostrarCabecera("Insertar cliente");
 		try {
-			controlador.insertar(Consola.leerCliente());
+			controladorMVC.insertar(Consola.leerCliente());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -160,7 +153,7 @@ public class VistaTexto implements IVista {
 	protected void insertarVehiculo() {
 		Consola.mostrarCabecera("Insertar Vehiculo");
 		try {
-			controlador.insertar(Consola.leerVehiculo());
+			controladorMVC.insertar(Consola.leerVehiculo());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -175,11 +168,11 @@ public class VistaTexto implements IVista {
 			Cliente cliente=alquiler.getCliente();
 			Vehiculo vehiculo=alquiler.getVehiculo();
 			
-			cliente = controlador.buscar(cliente);
-			vehiculo =controlador.buscar(vehiculo);
+			cliente = controladorMVC.buscar(cliente);
+			vehiculo =controladorMVC.buscar(vehiculo);
 			LocalDate fAlquiler=alquiler.getFechaAlquiler();
 			
-			controlador.insertar(new Alquiler(cliente, vehiculo, fAlquiler ));
+			controladorMVC.insertar(new Alquiler(cliente, vehiculo, fAlquiler ));
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -191,7 +184,7 @@ public class VistaTexto implements IVista {
 	//	BUSCAR
 	protected void buscarCliente() {
 		Consola.mostrarCabecera("Buscar cliente");
-		Cliente cliente=controlador.buscar(Consola.leerClienteDni());
+		Cliente cliente=controladorMVC.buscar(Consola.leerClienteDni());
 		if(cliente==null) {
 			System.out.println("ERROR:El cliente que busca no existe");
 		}
@@ -202,7 +195,7 @@ public class VistaTexto implements IVista {
 	}
 	protected void buscarVehiculo() {
 		Consola.mostrarCabecera("Buscar vehiculo");
-		Vehiculo vehiculo=controlador.buscar(Consola.leerVehiculoMatricula());
+		Vehiculo vehiculo=controladorMVC.buscar(Consola.leerVehiculoMatricula());
 		if(vehiculo==null) {
 			System.out.println("ERROR:El turismo que busca no existe");
 		}
@@ -214,7 +207,7 @@ public class VistaTexto implements IVista {
 	}
 	protected void buscarAlquiler() {
 		Consola.mostrarCabecera("Buscar alquiler");
-		Alquiler alquiler=controlador.buscar(Consola.leerAlquiler());
+		Alquiler alquiler=controladorMVC.buscar(Consola.leerAlquiler());
 		if(alquiler==null) {
 			System.out.println("ERROR:El Alquiler que busca no existe");
 		}
@@ -228,8 +221,8 @@ public class VistaTexto implements IVista {
 	protected void modificarCliente() {
 		Consola.mostrarCabecera("Modificar cliente");
 		try {
-			Cliente cliente=controlador.buscar(Consola.leerClienteDni());
-			controlador.modificar(cliente,Consola.leerNombre(),Consola.leerTelefono());
+			Cliente cliente=controladorMVC.buscar(Consola.leerClienteDni());
+			controladorMVC.modificar(cliente,Consola.leerNombre(),Consola.leerTelefono());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -239,7 +232,7 @@ public class VistaTexto implements IVista {
 	protected void devolverAlquilerCliente() {
 		Consola.mostrarCabecera("Devolver alquiler cliente");
 		try {
-			controlador.devolver(controlador.buscar(Consola.leerClienteDni()) ,Consola.leerFechaDevolucion());
+			controladorMVC.devolver(controladorMVC.buscar(Consola.leerClienteDni()) ,Consola.leerFechaDevolucion());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -249,7 +242,7 @@ public class VistaTexto implements IVista {
 	protected void devolverAlquilerVehiculo() {
 		Consola.mostrarCabecera("Devolver alquiler vehículo");
 		try {
-			controlador.devolver(controlador.buscar(Consola.leerVehiculoMatricula()),Consola.leerFechaDevolucion());
+			controladorMVC.devolver(controladorMVC.buscar(Consola.leerVehiculoMatricula()),Consola.leerFechaDevolucion());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -261,7 +254,7 @@ public class VistaTexto implements IVista {
 	protected void borrarCliente() {
 		Consola.mostrarCabecera("Borrar cliente");
 		try {
-			controlador.borrar(controlador.buscar(Consola.leerClienteDni()));
+			controladorMVC.borrar(controladorMVC.buscar(Consola.leerClienteDni()));
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -272,7 +265,7 @@ public class VistaTexto implements IVista {
 	protected void borrarVehiculo() {
 		Consola.mostrarCabecera("Borrar vehiculo");
 		try {
-			controlador.borrar(controlador.buscar(Consola.leerVehiculoMatricula()));
+			controladorMVC.borrar(controladorMVC.buscar(Consola.leerVehiculoMatricula()));
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -283,7 +276,7 @@ public class VistaTexto implements IVista {
 	protected void borrarAlquiler() {
 		Consola.mostrarCabecera("Borrar alquiler");
 		try {
-			controlador.borrar(Consola.leerAlquiler());
+			controladorMVC.borrar(Consola.leerAlquiler());
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		} catch (OperationNotSupportedException e) {
@@ -295,7 +288,7 @@ public class VistaTexto implements IVista {
 	//	LISTAR
 	protected void listarClientes() {
 		Consola.mostrarCabecera("Listar clientes");
-		List<Cliente> clientes=new ArrayList<>(controlador.getClientes());
+		List<Cliente> clientes=new ArrayList<>(controladorMVC.getClientes());
 		clientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
 		
 		if(clientes.size()==0) {
@@ -311,7 +304,7 @@ public class VistaTexto implements IVista {
 	}
 	protected void listarVehiculos() {
 		Consola.mostrarCabecera("Listar vehiculos");
-		List<Vehiculo> vehiculos=new ArrayList<>(controlador.getVehiculo());
+		List<Vehiculo> vehiculos=new ArrayList<>(controladorMVC.getVehiculo());
 		vehiculos.sort(Comparator.comparing(Vehiculo::getMarca).thenComparing(Vehiculo::getModelo).thenComparing(Vehiculo::getMatricula));
 		
 		if(vehiculos.size()==0) {
@@ -327,7 +320,7 @@ public class VistaTexto implements IVista {
 	protected void listarAlquileres() {
 			Consola.mostrarCabecera("Listar alquileres");
 				
-			List<Alquiler> alquileres=new ArrayList<>(controlador.getAlquileres());
+			List<Alquiler> alquileres=new ArrayList<>(controladorMVC.getAlquileres());
 			Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni);
 			alquileres.sort(Comparator.comparing(Alquiler::getFechaAlquiler).thenComparing(Alquiler::getCliente, comparadorCliente));
 				
@@ -347,7 +340,7 @@ public class VistaTexto implements IVista {
 	protected void listarAlquileresCliente() {
 		Consola.mostrarCabecera("Listar alquileres por clientes");
 		try {
-			System.out.println(controlador.getAlquileres(controlador.buscar(Consola.leerClienteDni())));
+			System.out.println(controladorMVC.getAlquileres(controladorMVC.buscar(Consola.leerClienteDni())));
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
@@ -356,7 +349,7 @@ public class VistaTexto implements IVista {
 	protected void listarAlquileresVehiculo() {
 		Consola.mostrarCabecera("Listar alquileres por vehiculo");
 		try {
-			System.out.println(controlador.getAlquileres(controlador.buscar(Consola.leerVehiculoMatricula())));
+			System.out.println(controladorMVC.getAlquileres(controladorMVC.buscar(Consola.leerVehiculoMatricula())));
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
@@ -378,7 +371,7 @@ public class VistaTexto implements IVista {
 		Map<TipoVehiculo,Integer> estadistica= inicializarEstadisticas();
 		LocalDate inicioMes=Consola.leerMes().withDayOfMonth(1);
 		LocalDate finMes=inicioMes.withDayOfMonth(inicioMes.lengthOfMonth());
-		List<Alquiler> alquileres=new ArrayList<>(controlador.getAlquileres());
+		List<Alquiler> alquileres=new ArrayList<>(controladorMVC.getAlquileres());
 		
 		for(Alquiler a:alquileres) {
 			if((a.getFechaAlquiler().isAfter(inicioMes) || a.getFechaAlquiler().isEqual(inicioMes)) && (a.getFechaAlquiler().isBefore(finMes) || a.getFechaAlquiler().isEqual(finMes))) {
@@ -387,6 +380,12 @@ public class VistaTexto implements IVista {
 			}
 		}
 		System.out.println(estadistica);
+	}
+
+	@Override
+	public void start(Stage arg0) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

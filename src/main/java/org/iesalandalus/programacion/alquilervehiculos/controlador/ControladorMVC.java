@@ -9,13 +9,13 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.alquilervehiculos.vista.IVista;
+import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class ControladorMVC implements IControlador {
-	private IVista vista;
+	private Vista vista;
 	private Modelo modelo;
 	
-	public ControladorMVC(Modelo modelo,IVista vista) {
+	public ControladorMVC(Modelo modelo,Vista vista) {
 		if(modelo==null) {
 			throw new NullPointerException("ERROR: El modelo no puede ser nulo");
 		}
