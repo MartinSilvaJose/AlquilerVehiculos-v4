@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -43,14 +44,14 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </TableView>
-            <TableView prefHeight="200.0" prefWidth="382.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+            <TableView fx:id="tvVehiculos" prefHeight="200.0" prefWidth="382.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
               <columns>
-                <TableColumn prefWidth="85.59996032714844" text="Marca" />
-                <TableColumn prefWidth="84.800048828125" text="Modelo" />
-                  <TableColumn prefWidth="66.4000244140625" text="Matrícula" />
-                  <TableColumn prefWidth="68.79998779296875" text="Cilindrada" />
-                  <TableColumn prefWidth="51.20001220703125" text="Plazas" />
-                  <TableColumn prefWidth="49.60004882812501" text="PMA" />
+                <TableColumn fx:id="tcVMarca" prefWidth="85.59996032714844" text="Marca" />
+                <TableColumn fx:id="tvVModelo" prefWidth="84.800048828125" text="Modelo" />
+                  <TableColumn fx:id="tvVMatricula" prefWidth="66.4000244140625" text="Matrícula" />
+                  <TableColumn fx:id="tvVCilindrada" prefWidth="68.79998779296875" text="Cilindrada" />
+                  <TableColumn fx:id="tvVPlazas" prefWidth="51.20001220703125" text="Plazas" />
+                  <TableColumn fx:id="tvVPma" prefWidth="49.60004882812501" text="PMA" />
               </columns>
                <GridPane.margin>
                   <Insets right="10.0" />
@@ -59,12 +60,12 @@
                   <Insets right="10.0" />
                </padding>
             </TableView>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+            <TableView fx:id="tvAlquileres" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
               <columns>
-                <TableColumn prefWidth="94.40000915527344" text="Cliente" />
-                <TableColumn prefWidth="84.7999267578125" text="Vehículo" />
-                  <TableColumn prefWidth="100.00006103515625" text="Fecha Alquiler" />
-                  <TableColumn prefWidth="127.20002441406251" text="Fecha Devolución" />
+                <TableColumn fx:id="tcACliente" prefWidth="94.40000915527344" text="Cliente" />
+                <TableColumn fx:id="tcAVehiculo" prefWidth="84.7999267578125" text="Vehículo" />
+                  <TableColumn fx:id="tcAFechaAlquiler" prefWidth="100.00006103515625" text="Fecha Alquiler" />
+                  <TableColumn fx:id="tcAFechaDevolucion" prefWidth="127.20002441406251" text="Fecha Devolución" />
               </columns>
                <GridPane.margin>
                   <Insets right="10.0" />
@@ -130,31 +131,27 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="294.0" style="-fx-border-color: FF0000;" text="Borrar" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="btnABorrar" mnemonicParsing="false" onAction="#borrarAlquiler" prefHeight="26.0" prefWidth="294.0" style="-fx-border-color: FF0000;" text="Borrar" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="139.0" text="Insertar" GridPane.rowIndex="1">
+                  <Button fx:id="btnAInsertar" mnemonicParsing="false" onAction="#insertarAlquiler" prefHeight="26.0" prefWidth="139.0" text="Insertar" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="270.0" text="Devolver" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                  <Button fx:id="btnADevolver" mnemonicParsing="false" onAction="#devolverAlquiler" prefHeight="26.0" prefWidth="270.0" text="Devolver" GridPane.columnSpan="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="290.0" text="Buscar">
+                  <Button fx:id="btnABuscar" mnemonicParsing="false" onAction="#buscarAlquiler" prefHeight="26.0" prefWidth="290.0" text="Buscar">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <TextField promptText="Introduzca fecha" GridPane.columnIndex="1">
-                     <GridPane.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </GridPane.margin>
-                  </TextField>
+                  <DatePicker fx:id="dpAFecha" promptText="Introduzca fecha" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <GridPane GridPane.columnSpan="2" GridPane.rowIndex="4">
@@ -168,27 +165,27 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="296.0" style="-fx-border-color: FF0000;" text="Borrar" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="btnVBorrar" mnemonicParsing="false" onAction="#borrarVehiculo" prefHeight="26.0" prefWidth="296.0" style="-fx-border-color: FF0000;" text="Borrar" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="295.0" text="Buscar">
+                  <Button fx:id="btnVBuscar" mnemonicParsing="false" onAction="#buscarVehiculo" prefHeight="26.0" prefWidth="295.0" text="Buscar">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="306.0" text="Mostrar Estadísticas" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                  <Button fx:id="btnVMostrarEstadisticas" mnemonicParsing="false" onAction="#mostrarEstadisticas" prefHeight="26.0" prefWidth="306.0" text="Mostrar Estadísticas" GridPane.columnSpan="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="290.0" text="Insertar" GridPane.rowIndex="1">
+                  <Button fx:id="btnVInsertar" mnemonicParsing="false" onAction="#insertarVehiculo" prefHeight="26.0" prefWidth="290.0" text="Insertar" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <TextField promptText="Introduzca matrÍcula" GridPane.columnIndex="1">
+                  <TextField fx:id="tfVMatricula" promptText="Introduzca matrÍcula" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
@@ -206,22 +203,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnCInsertar" mnemonicParsing="false" onAction="#insertarPersona" prefHeight="26.0" prefWidth="288.0" text="Insertar" GridPane.rowIndex="1">
+                  <Button fx:id="btnCInsertar" mnemonicParsing="false" onAction="#insertarCliente" prefHeight="26.0" prefWidth="288.0" text="Insertar" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnModificar" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="290.0" text="Modificar" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                  <Button fx:id="btnCModificar" alignment="CENTER" mnemonicParsing="false" onAction="#modificarCliente" prefHeight="26.0" prefWidth="290.0" text="Modificar" GridPane.columnSpan="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="286.0" text="Buscar">
+                  <Button fx:id="btnCBuscar" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="26.0" prefWidth="286.0" text="Buscar">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="284.0" style="-fx-border-color: FF0000;" text="Borrar" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="btnCBorrar" mnemonicParsing="false" onAction="#borrarCliente" prefHeight="26.0" prefWidth="284.0" style="-fx-border-color: FF0000;" text="Borrar" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
@@ -231,7 +228,7 @@
                         <Font name="Arial Black" size="14.0" />
                      </font>
                   </Label>
-                  <TextField promptText="Introduzca DNI" GridPane.columnIndex="1">
+                  <TextField fx:id="tfCDni" promptText="Introduzca DNI" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
