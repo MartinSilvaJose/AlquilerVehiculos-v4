@@ -197,4 +197,11 @@ public class Alquileres implements IAlquileres {
 			coleccionAlquileres.remove(alquiler);
 		
 	}
+
+
+	@Override
+	public void guardar() {
+		// TODO Auto-generated method stub
+		
+	}
 }

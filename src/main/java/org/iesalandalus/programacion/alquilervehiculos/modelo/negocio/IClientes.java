@@ -24,4 +24,6 @@ public interface IClientes {
 
 	void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException;
 
+	void guardar();
+
 }

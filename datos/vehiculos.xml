@@ -36,4 +36,11 @@
             <Plazas TipoDato="Integer">100</Plazas>
         </Autobus>
     </Vehiculo>
+    <Vehiculo Matricula="2325CPD" Tipo="Turismo">
+        <Marca TipoDato="String">Citroen</Marca>
+        <Modelo TipoDato="String">C5</Modelo>
+        <Turismo>
+            <Cilindrada TipoDato="Integer">1900</Cilindrada>
+        </Turismo>
+    </Vehiculo>
 </Vehiculos>

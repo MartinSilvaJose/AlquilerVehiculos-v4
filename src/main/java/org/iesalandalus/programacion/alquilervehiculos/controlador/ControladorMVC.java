@@ -28,7 +28,7 @@ public class ControladorMVC implements IControlador {
 	}
 	
 	
-	//	COMENZAR Y TERMINAR 
+	//	COMENZAR, TERMINAR y GUARDAR 
 	@Override
 	public void comenzar() {
 		modelo.comenzar();
@@ -38,7 +38,11 @@ public class ControladorMVC implements IControlador {
 	public void terminar() {
 		modelo.terminar();
 	}
-
+	@Override
+	public void guardar() {
+		modelo.guardar();
+		
+	}
 	
 	//	INSERTAR
 	@Override
@@ -124,5 +128,8 @@ public class ControladorMVC implements IControlador {
 	public List<Alquiler> getAlquileres(Vehiculo vehiculo){
 		return modelo.getAlquileres(vehiculo);
 	}
+
+
+
 	
 }

@@ -195,5 +195,9 @@ public class Clientes implements IClientes {
 
 		
 	}
+	@Override
+	public void guardar() {
+		escribirXml();
+	}
 	
 }

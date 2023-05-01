@@ -76,4 +76,11 @@ public class Vehiculos implements IVehiculos {
 		}
 		coleccionVehiculos.remove(vehiculo);
 	}
+
+
+	@Override
+	public void guardar() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -39,6 +39,9 @@ public class VistaGrafica extends Vista {
 			System.out.println("Antes de set controlador");
 			ControladorEscenaPrincipal controlador=loader.getController();
 			controlador.setControladorMVC(controladorMVC);
+			controlador.setListaCliente(controladorMVC.getClientes());
+			controlador.setListaVehiculo(controladorMVC.getVehiculo());
+			controlador.setListaAlquiler(controladorMVC.getAlquileres());
 			
 			Scene escena =new Scene(raiz);
 			primaryStage.setOnCloseRequest(e -> confirmarSalida(primaryStage, e));

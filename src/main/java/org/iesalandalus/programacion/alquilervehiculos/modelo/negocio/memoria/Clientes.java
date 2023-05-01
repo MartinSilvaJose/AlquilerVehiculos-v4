@@ -105,5 +105,12 @@ public class Clientes implements IClientes {
 
 		
 	}
+
+
+	@Override
+	public void guardar() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

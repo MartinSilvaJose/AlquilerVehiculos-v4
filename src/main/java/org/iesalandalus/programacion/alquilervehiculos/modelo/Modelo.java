@@ -34,6 +34,11 @@ public abstract class Modelo {
 		alquileres.terminar();
 		System.out.println("El modelo ha terminado");
 	}
+	public void guardar() {
+		clientes.guardar();
+		vehiculos.guardar();
+		alquileres.guardar();
+	}
 	
 	protected void setFuenteDatos(IFuenteDatos fuenteDatos) {
 		if(fuenteDatos instanceof FuenteDatosMemoria) {

@@ -56,4 +56,6 @@ public interface IControlador {
 
 	List<Alquiler> getAlquileres(Vehiculo vehiculo);
 
+	void guardar();
+
 }

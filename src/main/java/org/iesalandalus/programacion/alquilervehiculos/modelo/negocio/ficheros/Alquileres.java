@@ -153,6 +153,7 @@ public class Alquileres implements IAlquileres {
 			if(i.getCliente().equals(cliente));
 				alquilerPorCliente.add(i);
 		}
+		System.out.println("soy el método profundo"+alquilerPorCliente);
 		return alquilerPorCliente;
 	}
 	
@@ -300,5 +301,10 @@ public class Alquileres implements IAlquileres {
 		}
 			coleccionAlquileres.remove(alquiler);
 		
+	}
+
+	@Override
+	public void guardar() {
+		escribirXml();
 	}
 }

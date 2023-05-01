@@ -22,4 +22,6 @@ public interface IVehiculos {
 
 	void borrar(Vehiculo vehiculo) throws OperationNotSupportedException;
 
+	void guardar();
+
 }

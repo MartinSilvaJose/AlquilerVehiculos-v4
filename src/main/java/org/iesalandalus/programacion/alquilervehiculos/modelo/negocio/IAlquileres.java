@@ -36,4 +36,6 @@ public interface IAlquileres {
 
 	void borrar(Alquiler alquiler) throws OperationNotSupportedException;
 
+	void guardar();
+
 }

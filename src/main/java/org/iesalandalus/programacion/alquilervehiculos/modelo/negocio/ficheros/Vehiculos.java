@@ -228,4 +228,9 @@ public class Vehiculos implements IVehiculos {
 		}
 		coleccionVehiculos.remove(vehiculo);
 	}
+
+	@Override
+	public void guardar() {
+		escribirXml();
+	}
 }

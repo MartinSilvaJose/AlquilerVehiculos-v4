@@ -31,7 +31,7 @@ public class Furgoneta extends Vehiculo{
 		return this.plazas;
 	}
 	public void setPlazas(int plazas) {
-		if(plazas<5 || plazas>8) {
+		if(plazas<3 || plazas>8) {
 			throw new IllegalArgumentException("ERROR: El número de plazas no se corresponde con una furgoneta");
 		}
 		
