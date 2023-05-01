@@ -150,17 +150,17 @@ public class Alquileres implements IAlquileres {
 		}
 		List<Alquiler> alquilerPorCliente=new ArrayList<>();
 		for(Alquiler i:coleccionAlquileres) {
-			if(i.getCliente().equals(cliente));
+			if(i.getCliente().equals(cliente)) {
 				alquilerPorCliente.add(i);
+			}
 		}
-		System.out.println("soy el método profundo"+alquilerPorCliente);
 		return alquilerPorCliente;
 	}
 	
 	@Override
 	public List<Alquiler> get(Vehiculo vehiculo){
 		if(vehiculo==null) {
-			throw new NullPointerException("ERROR:El turismo del cual desea obtener un lista no puede ser nulo.");
+			throw new NullPointerException("ERROR:El vehiculo del cual desea obtener un lista no puede ser nulo.");
 		}
 		List<Alquiler> alquilerPorVehiculo=new ArrayList<>();
 		for(Alquiler i:coleccionAlquileres) {

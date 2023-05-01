@@ -2,7 +2,7 @@
 <Clientes>
     <Cliente Dni="12345678Z">
         <Nombre TipoDato="String">Luis</Nombre>
-        <Telefono TipoDato="String">950123456</Telefono>
+        <Telefono TipoDato="String">650123456</Telefono>
     </Cliente>
     <Cliente Dni="77167779L">
         <Nombre TipoDato="String">Laura</Nombre>

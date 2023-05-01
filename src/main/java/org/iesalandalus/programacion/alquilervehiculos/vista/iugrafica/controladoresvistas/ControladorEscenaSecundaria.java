@@ -1,14 +1,12 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica.controladoresvistas;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
-import javax.swing.plaf.metal.MetalIconFactory.PaletteCloseIcon;
 
 import org.iesalandalus.programacion.alquilervehiculos.controlador.IControlador;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
@@ -19,7 +17,6 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.TipoVehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica.utilidades.Dialogos;
-import org.iesalandalus.programacion.alquilervehiculos.vista.iutextual.Consola;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +35,6 @@ public class ControladorEscenaSecundaria {
 	private Cliente cliente=null;
 	private Vehiculo vehiculo=null;
 	private Alquiler alquiler=null;
-    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
 //	FXML Cliente
     @FXML
@@ -233,7 +229,6 @@ public class ControladorEscenaSecundaria {
 				Dialogos.mostrarDialogoInformacion("Insertar cliente", "Se ha insertado el cliente correctamente");
 				salir(this.btnInsertarCliente);
 			} catch (OperationNotSupportedException | IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				Dialogos.mostrarDialogoError("Insertar cliente", e.getMessage());
 			}
     	}else {

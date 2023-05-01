@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -263,35 +261,27 @@ public class ControladorEscenaPrincipal {
 	        escenario.setTitle(titulo);
 	        escenario.showAndWait();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         return controlador;
     }
     @FXML
     void insertarCliente(ActionEvent event) {
-    	ControladorEscenaSecundaria controlador=lanzadorEscenaSecundaria("Clientes", "Insertar cliente");
-        Cliente cliente=controlador.getCliente();
-//        if(cliente!=null) {
-//        	obsClientes.add(cliente);
-//        }
-//        tvClientes.refresh();
+    	lanzadorEscenaSecundaria("Clientes", "Insertar cliente");
         restablecerTablas();
     }
     
     @FXML
     void insertarVehiculo(ActionEvent event) {
 
-    	ControladorEscenaSecundaria controlador=lanzadorEscenaSecundaria("Vehiculos", "Insertar vehiculo");
-    	Vehiculo vehiculo=controlador.getVehiculo();
+    	lanzadorEscenaSecundaria("Vehiculos", "Insertar vehiculo");
     	restablecerTablas();
 
             
     }
     @FXML
     void insertarAlquiler(ActionEvent event) {
-    	ControladorEscenaSecundaria controlador=lanzadorEscenaSecundaria("Alquileres", "Insertar alquiler");
-    	Alquiler alquiler=controlador.getAlquiler();
+    	lanzadorEscenaSecundaria("Alquileres", "Insertar alquiler");
     	restablecerTablas();
 
     }
@@ -439,63 +429,68 @@ public class ControladorEscenaPrincipal {
 
     @FXML
     void seleccionarAlquiler(MouseEvent event) {
-    	restablecerTablas();
-    	Alquiler alquilerSeleccionado=new Alquiler(tvAlquileres.getSelectionModel().getSelectedItem());
-    	if(alquilerSeleccionado!=null) {
-    		obsClientes.clear();
-    		obsClientes.add(alquilerSeleccionado.getCliente());
-    		tvClientes.setItems(obsClientes);
-    		tvClientes.refresh();
-    		
-    		obsVehiculos.clear();
-    		obsVehiculos.add(alquilerSeleccionado.getVehiculo());
-    		tvVehiculos.setItems(obsVehiculos);
-    		tvVehiculos.refresh();
-    	}
+
+    	try {
+        	Alquiler alquilerSeleccionado=new Alquiler(tvAlquileres.getSelectionModel().getSelectedItem());
+	    	if(alquilerSeleccionado!=null) {
+	        	restablecerTablas();
+	    		obsClientes.clear();
+	    		obsClientes.add(alquilerSeleccionado.getCliente());
+	    		tvClientes.setItems(obsClientes);
+	    		tvClientes.refresh();
+	    		
+	    		obsVehiculos.clear();
+	    		obsVehiculos.add(alquilerSeleccionado.getVehiculo());
+	    		tvVehiculos.setItems(obsVehiculos);
+	    		tvVehiculos.refresh();
+	    	}
+		} catch (NullPointerException e) {
+			
+		}
     }
 
     @FXML
     void seleccionarCliente(MouseEvent event) {
-    	restablecerTablas();
-//    	tvClientes.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue) -> mostrarAlquileresCliente(newValue));
-//    	Cliente clienteSeleccionado=new Cliente(tvClientes.getSelectionModel().getSelectedItem());
-//    	System.out.println(clienteSeleccionado);
-//    	if(clienteSeleccionado!=null) {
-//    		mostrarAlquileresCliente(clienteSeleccionado);
+		try {
+		  	Cliente clienteSeleccionado=new Cliente(tvClientes.getSelectionModel().getSelectedItem());
+	    	System.out.println(clienteSeleccionado);
+	    	if(clienteSeleccionado!=null) {
+	        	restablecerTablas();
+	    		List<Alquiler> alquileresCliente=new ArrayList<>(controladorMVC.getAlquileres(clienteSeleccionado));
+	    		actualizaTablaAlquileres(alquileresCliente);
+    	}
+		} catch (NullPointerException e) {
+		}
+
     }
 
-//    private void mostrarAlquileresCliente(Cliente clienteSeleccionado) {
-//		List<Alquiler> alquileresCliente=new ArrayList<>(controladorMVC.getAlquileres(clienteSeleccionado));
-//		actualizaTablaAlquileres(alquileresCliente);
-//
-//		
-//	}
 
 	@FXML
     void seleccionarVehiculo(MouseEvent event) {
-		restablecerTablas();
-    	Vehiculo vehiculoSeleccionado=tvVehiculos.getSelectionModel().getSelectedItem();
-    	if(vehiculoSeleccionado!=null) {
-    		
-	    	if(TipoVehiculo.get(vehiculoSeleccionado).equals(TipoVehiculo.TURISMO)) {
-	    		vehiculoSeleccionado=new Turismo((Turismo) vehiculoSeleccionado);
-	    	}else if(TipoVehiculo.get(vehiculoSeleccionado).equals(TipoVehiculo.FURGONETA)) {
-	    		vehiculoSeleccionado=new Furgoneta((Furgoneta) vehiculoSeleccionado);
-	    	}else if(TipoVehiculo.get(vehiculoSeleccionado).equals(TipoVehiculo.AUTOBUS)) {
-	    		vehiculoSeleccionado=new Autobus((Autobus) vehiculoSeleccionado);
+		try {
+			Vehiculo vehiculoSeleccionado=tvVehiculos.getSelectionModel().getSelectedItem();
+	    	if(vehiculoSeleccionado!=null) {
+	    		restablecerTablas();
+		    	if(TipoVehiculo.get(vehiculoSeleccionado).equals(TipoVehiculo.TURISMO)) {
+		    		vehiculoSeleccionado=new Turismo((Turismo) vehiculoSeleccionado);
+		    	}else if(TipoVehiculo.get(vehiculoSeleccionado).equals(TipoVehiculo.FURGONETA)) {
+		    		vehiculoSeleccionado=new Furgoneta((Furgoneta) vehiculoSeleccionado);
+		    	}else if(TipoVehiculo.get(vehiculoSeleccionado).equals(TipoVehiculo.AUTOBUS)) {
+		    		vehiculoSeleccionado=new Autobus((Autobus) vehiculoSeleccionado);
+		    	}
+				List<Alquiler> alquileresVehiculo=new ArrayList<>(controladorMVC.getAlquileres(vehiculoSeleccionado));
+				actualizaTablaAlquileres(alquileresVehiculo);
+				
 	    	}
-    		mostrarAlquileresVehiculo(vehiculoSeleccionado);
-    	}
+		} catch (NullPointerException e) {
+		}
     }
 
-	private void mostrarAlquileresVehiculo(Vehiculo vehiculoSeleccionado) {
-		List<Alquiler> alquileresVehiculo=new ArrayList<>(controladorMVC.getAlquileres(vehiculoSeleccionado));
-		actualizaTablaAlquileres(alquileresVehiculo);
-	}
+
+
 	private void actualizaTablaAlquileres(List<Alquiler> tablaAlquiler) {
 		obsAlquileres.setAll(tablaAlquiler);
 		tvAlquileres.setItems(obsAlquileres);
-		tvAlquileres.refresh();
 	}
 	
     @FXML

@@ -7,7 +7,6 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.ModeloCascada;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros.FuenteDatosFicheros;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 import org.iesalandalus.programacion.alquilervehiculos.vista.iugrafica.VistaGrafica;
-import org.iesalandalus.programacion.alquilervehiculos.vista.iutextual.VistaTexto;
 
 public class MainApp {
 

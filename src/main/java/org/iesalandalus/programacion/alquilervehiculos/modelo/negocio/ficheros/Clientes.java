@@ -152,7 +152,7 @@ public class Clientes implements IClientes {
 			throw new NullPointerException("ERROR: No se puede buscar un cliente nulo.");
 		}
 		for(Cliente i:coleccionClientes) {
-			if(cliente.equals(i)) {
+			if(cliente.getDni().equals(i.getDni())) {
 				return i;
 			}
 		}

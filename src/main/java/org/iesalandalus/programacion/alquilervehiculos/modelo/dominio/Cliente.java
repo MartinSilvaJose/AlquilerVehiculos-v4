@@ -126,6 +126,9 @@ public class Cliente {
 
 	
 	public static Cliente getClienteConDni(String dni) {
+		if(dni==null) {
+			throw new NullPointerException("ERROR: El dni no puede ser nulo.");
+		}
 		return new Cliente("Pedro",dni,"600500400");
 	}
 	
