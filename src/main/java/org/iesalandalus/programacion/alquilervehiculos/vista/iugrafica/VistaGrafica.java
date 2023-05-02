@@ -32,9 +32,7 @@ public class VistaGrafica extends Vista {
 		try {
 //			Escenario Principal
 			FXMLLoader loader=new FXMLLoader(getClass().getResource("vistas/EscenaPrincipal.fxml"));
-			System.out.println("LLamada al load");
 			Parent raiz=loader.load();
-			System.out.println("Antes de set controlador");
 			ControladorEscenaPrincipal controlador=loader.getController();
 			controlador.setControladorMVC(controladorMVC);
 			controlador.setListaCliente(controladorMVC.getClientes());

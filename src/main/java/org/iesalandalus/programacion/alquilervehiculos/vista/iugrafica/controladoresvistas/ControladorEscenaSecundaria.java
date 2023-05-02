@@ -31,12 +31,59 @@ import javafx.stage.Stage;
 
 public class ControladorEscenaSecundaria {
 	
+//	DECLARACIÓN
+	
 	private IControlador controladorMVC;
 	private Cliente cliente=null;
 	private Vehiculo vehiculo=null;
 	private Alquiler alquiler=null;
+	
+//	SETTERS
+	
+    public void setControladorMVC(IControlador controlador){   
+        controladorMVC = controlador;        
+    }
     
-//	FXML Cliente
+    public void setAccion(String interfaz) {
+        if(interfaz.equals("Clientes")) {
+        	gpClientes.setVisible(true);
+        }else if(interfaz.equals("Vehiculos")) {
+        	gpVehiculos.setVisible(true);
+        }else if(interfaz.equals("Alquileres")) {
+        	gpAlquileres.setVisible(true);
+        }else if(interfaz.equals("Modificar")) {
+        	gpModificarClientes.setVisible(true);
+        }else if(interfaz.equals("MostrarEstadisticas")) {
+        	labelMEstadisticasYDevolver.setText("Mostrar Estadísticas");
+        	btnMEstadisticasYDevolver.setText("Mostrar");
+        	gpMEstadisticasYDevolver.setVisible(true);
+        	gpMostrarEstadisticas.setVisible(true);
+        }else if(interfaz.equals("Devolver")) {
+        	labelMEstadisticasYDevolver.setText("Delvolver Alquiler");
+        	btnMEstadisticasYDevolver.setText("Devolver");
+        	gpMEstadisticasYDevolver.setVisible(true);
+        }
+        
+    }
+    
+    public void setCliente(Cliente cliente) {
+    	this.cliente=cliente;
+    }
+    
+    public void setTfClienteMNombre(String nuevoNombre) {
+    	this.tfClienteMNombre.setText(nuevoNombre);
+    }
+    
+    public void setTfClienteMTelefono(String nuevoTelefono) {
+    	this.tfClienteMTelefono.setText(nuevoTelefono);
+    }
+    
+	public void setAlquiler(Alquiler alquiler) {
+		this.alquiler=alquiler;
+	}
+	
+//	FXML CLIENTES
+	
     @FXML
     private GridPane gpClientes;
  
@@ -52,20 +99,8 @@ public class ControladorEscenaSecundaria {
     @FXML
     private Button btnInsertarCliente;
     
-//    FXML ModificarCliente
-    @FXML
-    private GridPane gpModificarClientes;
-
-    @FXML
-    private Button btnModificarCliente;
-
-    @FXML
-    private TextField tfClienteMNombre;
-
-    @FXML
-    private TextField tfClienteMTelefono;
+//    FXML VEHÍCULOS
     
-//    FXML Vehículo
     @FXML
     private GridPane gpVehiculos;
 
@@ -111,7 +146,7 @@ public class ControladorEscenaSecundaria {
     @FXML
     private Button btnInsertarVehiculo;
     
-//    FXML Alquiler
+//    FXML ALQUILER
     
     @FXML
     private GridPane gpAlquileres;
@@ -128,7 +163,21 @@ public class ControladorEscenaSecundaria {
     @FXML
     private Button btnInsertarAlquiler;
 
-//    FXML Mostrar Estadisticas y Devolver
+//  FXML MODIFICAR CLIENTES
+    
+    @FXML
+    private GridPane gpModificarClientes;
+
+    @FXML
+    private Button btnModificarCliente;
+
+    @FXML
+	 private TextField tfClienteMNombre;
+
+    @FXML
+    private TextField tfClienteMTelefono;
+  
+//  FXML MOSTRAR ESTADÍSTICAS Y DEVOLVER
 
     @FXML
     private GridPane gpMEstadisticasYDevolver;
@@ -155,49 +204,32 @@ public class ControladorEscenaSecundaria {
     private Label labelMEstadisticasYDevolver;
     
     @FXML
+    
+    
     void accionMEstadisticaODevolver(ActionEvent event) {
 		LocalDate fecha=dpMEstadisticasYDevolver.getValue();
 
-	    	if(gpMostrarEstadisticas.isVisible()) {
-	    		if(fecha!=null) {
-		    		Map<TipoVehiculo, Integer> estadistica=new EnumMap<>(TipoVehiculo.class);
-		    		for(TipoVehiculo tipo:TipoVehiculo.values()) {
-		    			estadistica.put(tipo, 0);
-		    		}
-		    		LocalDate inicioMes=fecha.withDayOfMonth(1);
-		    		LocalDate finMes=inicioMes.withDayOfMonth(inicioMes.lengthOfMonth());
-		    		List<Alquiler> alquileres=new ArrayList<>(controladorMVC.getAlquileres());
-		    		
-		    		for(Alquiler a:alquileres) {
-		    			if((a.getFechaAlquiler().isAfter(inicioMes) || a.getFechaAlquiler().isEqual(inicioMes)) && (a.getFechaAlquiler().isBefore(finMes) || a.getFechaAlquiler().isEqual(finMes))) {
-		    				TipoVehiculo tipoVehiculo=TipoVehiculo.get(a.getVehiculo());
-		    				estadistica.put(tipoVehiculo, estadistica.get(tipoVehiculo)+1);
-		    			}
-		    		}
-		    		labelEstadisticaTurismo.setText(estadistica.get(TipoVehiculo.TURISMO)+"");
-		    		labelEstadisticaFurgoneta.setText(estadistica.get(TipoVehiculo.FURGONETA)+"");
-		    		labelEstadisticaAutobuses.setText(estadistica.get(TipoVehiculo.AUTOBUS)+"");
-	    		}else {
-	    			Dialogos.mostrarDialogoInformacion("Error", "Debe de rellenar el campo fecha.");
-	    		}
-	    		}else if(!gpMostrarEstadisticas.isVisible() && gpMEstadisticasYDevolver.isVisible()) {
-	    			if(fecha!=null) {
-	    			try {
-		    			alquiler.setFechaDevolucion(fecha);
-		    			Dialogos.mostrarDialogoInformacion("Devolver Alquiler", "Se ha establecido la fecha de devolución correctamente");
-		    			salir(btnMEstadisticasYDevolver);
-					} catch (IllegalArgumentException e) {
-						Dialogos.mostrarDialogoError("Devolver Alquiler",e.getMessage());
-					}
-	    		}else {
-	    			Dialogos.mostrarDialogoInformacion("Error", "Debe de rellenar el campo fecha.");
-	    		}
-
-	    			
-
-
-}
+	    if(gpMostrarEstadisticas.isVisible()) {
+	    	if(fecha!=null) {
+		    	mostrarEstadisticas(fecha);
+	    	}else {
+	    		Dialogos.mostrarDialogoInformacion("Error", "Debe de rellenar el campo fecha.");
+	    	}
+	    	}else if(!gpMostrarEstadisticas.isVisible() && gpMEstadisticasYDevolver.isVisible()) {
+	    	if(fecha!=null) {
+	    		try {
+		    		alquiler.setFechaDevolucion(fecha);
+		    		Dialogos.mostrarDialogoInformacion("Devolver Alquiler", "Se ha establecido la fecha de devolución correctamente");
+		    		salir(btnMEstadisticasYDevolver);
+				} catch (IllegalArgumentException e) {
+					Dialogos.mostrarDialogoError("Devolver Alquiler",e.getMessage());
+				}
+	    	}else {
+	    		Dialogos.mostrarDialogoInformacion("Error", "Debe de rellenar el campo fecha.");
+	    	}
+	    }
     }
+
     @FXML
     void ModificarCliente(ActionEvent event) {
     	String nuevoCliente=tfClienteMNombre.getText();
@@ -250,27 +282,26 @@ public class ControladorEscenaSecundaria {
     	
     	if(!marca.trim().isEmpty() && !modelo.trim().isEmpty() && !matricula.trim().isEmpty()) {
     		
-    			try {
-    				if(rbTurismo.isSelected()) {
-    		    		cilindrada=Integer.parseInt(tfVehiculoCilindrada.getText());
-    					vehiculo=new Turismo(marca,modelo,cilindrada,matricula);
+    		try {
+    			if(rbTurismo.isSelected()) {
+    		    	cilindrada=Integer.parseInt(tfVehiculoCilindrada.getText());
+    				vehiculo=new Turismo(marca,modelo,cilindrada,matricula);
     					
-    				}else if(rbAutobus.isSelected()) {
-    		    		pma=Integer.parseInt(tfVehiculoPma.getText());
-    					vehiculo=new Autobus(marca,modelo,plazas,matricula);
+    			}else if(rbAutobus.isSelected()) {
+    		    	pma=Integer.parseInt(tfVehiculoPma.getText());
+    				vehiculo=new Autobus(marca,modelo,plazas,matricula);
     					
-    				}else if(rbFurgoneta.isSelected()){
-    		    		plazas=Integer.parseInt(tfVehiculoPlazas.getText());
-    		    		pma=Integer.parseInt(tfVehiculoPma.getText());
-    					vehiculo=new Furgoneta(marca, modelo, plazas, pma, matricula);
-    				}
-    				
-					controladorMVC.insertar(vehiculo);
-					Dialogos.mostrarDialogoInformacion("Insertar vehículo", "Se ha insertado el vehículo correctamente");
-					salir(btnInsertarVehiculo);
+    			}else if(rbFurgoneta.isSelected()){
+    		    	plazas=Integer.parseInt(tfVehiculoPlazas.getText());
+    		    	pma=Integer.parseInt(tfVehiculoPma.getText());
+    				vehiculo=new Furgoneta(marca, modelo, plazas, pma, matricula);
+    			}
+    			controladorMVC.insertar(vehiculo);
+				Dialogos.mostrarDialogoInformacion("Insertar vehículo", "Se ha insertado el vehículo correctamente");
+				salir(btnInsertarVehiculo);
 				} catch (OperationNotSupportedException | IllegalArgumentException  e) {
-//					Quiero mandar un mensaje cuando salta la excepción NumberFormatException pero no se como
-					Dialogos.mostrarDialogoError("Insertar vehículo",e.getMessage());
+//				Quiero mandar un mensaje cuando salta la excepción NumberFormatException pero no sé como
+				Dialogos.mostrarDialogoError("Insertar vehículo",e.getMessage());
 					
 				}
     	}else {
@@ -308,15 +339,12 @@ public class ControladorEscenaSecundaria {
     	}
     	
     }
-    
-   
+     
     @FXML
     void eleccionAutobus(ActionEvent event) {
     	deshabilidarTiposVehiculo();
     	lVehiculoPlazas.setDisable(false);
-    	tfVehiculoPlazas.setDisable(false);
-    	
-   
+    	tfVehiculoPlazas.setDisable(false);   	 
     }
 
     @FXML
@@ -334,61 +362,34 @@ public class ControladorEscenaSecundaria {
     	lVehiculoCilindrada.setDisable(false);
     	tfVehiculoCilindrada.setDisable(false);
     }
-    public void setControladorMVC(IControlador controlador) 
-    {   
-        controladorMVC = controlador;        
-    }
-    public void setAccion(String interfaz)
-    {
-        if(interfaz.equals("Clientes")) {
-        	gpClientes.setVisible(true);
-        }else if(interfaz.equals("Vehiculos")) {
-        	gpVehiculos.setVisible(true);
-        }else if(interfaz.equals("Alquileres")) {
-        	gpAlquileres.setVisible(true);
-        }else if(interfaz.equals("Modificar")) {
-        	gpModificarClientes.setVisible(true);
-        }else if(interfaz.equals("MostrarEstadisticas")) {
-        	labelMEstadisticasYDevolver.setText("Mostrar Estadísticas");
-        	btnMEstadisticasYDevolver.setText("Mostrar");
-        	gpMEstadisticasYDevolver.setVisible(true);
-        	gpMostrarEstadisticas.setVisible(true);
-        }else if(interfaz.equals("Devolver")) {
-        	labelMEstadisticasYDevolver.setText("Delvolver Alquiler");
-        	btnMEstadisticasYDevolver.setText("Devolver");
-        	gpMEstadisticasYDevolver.setVisible(true);
-        }
-        
-    }
+
+//  MÉTODOS CREADOS PARA REUTILIZAR Y CLARIFICAR CÓDIGO
     
     private void salir(Button btn) {
     	Stage stage=(Stage) btn.getScene().getWindow();
     	stage.close();
     }
     
-    public void setCliente(Cliente cliente) {
-    	this.cliente=cliente;
-    }
+	private void mostrarEstadisticas(LocalDate fecha) {
+		Map<TipoVehiculo, Integer> estadistica=new EnumMap<>(TipoVehiculo.class);
+		for(TipoVehiculo tipo:TipoVehiculo.values()) {
+			estadistica.put(tipo, 0);
+		}
+		LocalDate inicioMes=fecha.withDayOfMonth(1);
+		LocalDate finMes=inicioMes.withDayOfMonth(inicioMes.lengthOfMonth());
+		List<Alquiler> alquileres=new ArrayList<>(controladorMVC.getAlquileres());
+		
+		for(Alquiler a:alquileres) {
+			if((a.getFechaAlquiler().isAfter(inicioMes) || a.getFechaAlquiler().isEqual(inicioMes)) && (a.getFechaAlquiler().isBefore(finMes) || a.getFechaAlquiler().isEqual(finMes))) {
+				TipoVehiculo tipoVehiculo=TipoVehiculo.get(a.getVehiculo());
+				estadistica.put(tipoVehiculo, estadistica.get(tipoVehiculo)+1);
+			}
+		}
+		labelEstadisticaTurismo.setText(estadistica.get(TipoVehiculo.TURISMO)+"");
+		labelEstadisticaFurgoneta.setText(estadistica.get(TipoVehiculo.FURGONETA)+"");
+		labelEstadisticaAutobuses.setText(estadistica.get(TipoVehiculo.AUTOBUS)+"");
+	}
     
-    public void setTfClienteMNombre(String nuevoNombre) {
-    	this.tfClienteMNombre.setText(nuevoNombre);
-    }
-    public void setTfClienteMTelefono(String nuevoTelefono) {
-    	this.tfClienteMTelefono.setText(nuevoTelefono);
-    }
-    
-    public Cliente getCliente() {
-    	return cliente;
-    }
-	public void setAlquiler(Alquiler alquiler) {
-		this.alquiler=alquiler;
-	}
-	public Vehiculo getVehiculo() {
-		return vehiculo;
-	}
-	public Alquiler getAlquiler() {
-		return alquiler;
-	}
     private void deshabilidarTiposVehiculo() {
     	lVehiculoCilindrada.setDisable(true);
     	tfVehiculoCilindrada.setDisable(true);

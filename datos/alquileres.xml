@@ -12,16 +12,4 @@
         <FechaAlquiler Formato="dd/MM/yyyy" TipoDato="LocalDate">23/03/2023</FechaAlquiler>
         <FechaDevolucion Formato="dd/MM/yyyy" TipoDato="LocalDate">24/03/2023</FechaDevolucion>
     </Alquiler>
-    <Alquiler Dni="77653071B" Matricula="6325KGB">
-        <FechaAlquiler Formato="dd/MM/yyyy" TipoDato="LocalDate">19/04/2023</FechaAlquiler>
-        <FechaDevolucion Formato="dd/MM/yyyy" TipoDato="LocalDate">20/04/2023</FechaDevolucion>
-    </Alquiler>
-    <Alquiler Dni="77653071B" Matricula="8335JGW">
-        <FechaAlquiler Formato="dd/MM/yyyy" TipoDato="LocalDate">21/04/2023</FechaAlquiler>
-        <FechaDevolucion Formato="dd/MM/yyyy" TipoDato="LocalDate">22/04/2023</FechaDevolucion>
-    </Alquiler>
-    <Alquiler Dni="77653071B" Matricula="8336JGW">
-        <FechaAlquiler Formato="dd/MM/yyyy" TipoDato="LocalDate">23/04/2023</FechaAlquiler>
-        <FechaDevolucion Formato="dd/MM/yyyy" TipoDato="LocalDate">24/04/2023</FechaDevolucion>
-    </Alquiler>
 </Alquileres>

@@ -35,77 +35,49 @@ import javafx.stage.Stage;
 public class ControladorEscenaPrincipal {
 	
 //	DECLARACIÓN
+	
 	private IControlador controladorMVC;
 	
-	@FXML
-	private void initialize() {
-//		Tabla Cliente
-		tcCNombre.setCellValueFactory(cliente ->new SimpleStringProperty(cliente.getValue().getNombre()));
-		tcCDni.setCellValueFactory(cliente->new SimpleStringProperty(cliente.getValue().getDni()));
-		tcCTelefono.setCellValueFactory(cliente->new SimpleStringProperty(cliente.getValue().getTelefono()));
-		tvClientes.setItems(obsClientes);
-		
-//		Tabla Vehiculo
-		tcVMarca.setCellValueFactory(vehiculo ->new SimpleStringProperty(vehiculo.getValue().getMarca()));
-		tcVModelo.setCellValueFactory(vehiculo ->new SimpleStringProperty(vehiculo.getValue().getModelo()));
-		tcVMatricula.setCellValueFactory(vehiculo ->new SimpleStringProperty(vehiculo.getValue().getMatricula()));
-		tcVCilindrada.setCellValueFactory(vehiculo -> {
-		    if (vehiculo.getValue() instanceof Turismo) {
-		        return new SimpleIntegerProperty(((Turismo) vehiculo.getValue()).getCilindrada()).asObject();
-		    } else {
-		        return null;
-		    }
-		});
-		tcVPlazas.setCellValueFactory(vehiculo -> {
-		    if (vehiculo.getValue() instanceof Autobus) {
-		        return new SimpleIntegerProperty(((Autobus) vehiculo.getValue()).getPlazas()).asObject();
-		    }else if(vehiculo.getValue() instanceof Furgoneta) {
-		        return new SimpleIntegerProperty(((Furgoneta) vehiculo.getValue()).getPlazas()).asObject();
-		    }else {
-		        return null;
-		    }
-		});
-		tcVPma.setCellValueFactory(vehiculo -> {
-		    if (vehiculo.getValue() instanceof Furgoneta) {
-		        return new SimpleIntegerProperty(((Furgoneta) vehiculo.getValue()).getPma()).asObject();
-		    } else {
-		        return null;
-		    }
-		});
-
-		tvVehiculos.setItems(obsVehiculos);
-		
-//		Tabla Alquiler
-		tcAVehiculo.setCellValueFactory(alquiler -> new SimpleObjectProperty<String>(alquiler.getValue().getVehiculo().getMatricula()));
-		tcACliente.setCellValueFactory(alquiler -> new SimpleObjectProperty<String>(alquiler.getValue().getCliente().getDni()));
-		tcAFechaAlquiler.setCellValueFactory(alquiler-> new SimpleObjectProperty<>(alquiler.getValue().getFechaAlquiler()));
-		tcAFechaDevolucion.setCellValueFactory(alquiler-> new SimpleObjectProperty<>(alquiler.getValue().getFechaDevolucion()));
-		tcAPrecio.setCellValueFactory(alquiler->new SimpleObjectProperty<Integer>(alquiler.getValue().getPrecio()));
-		tvAlquileres.setItems(obsAlquileres);
-	}
-    public void setControladorMVC(IControlador controlador) 
-    {           
+//	SETTERS
+	
+    public void setControladorMVC(IControlador controlador) {           
         controladorMVC = controlador;        
     }
     
 	public void setListaCliente(List<Cliente> clientes) {
 		obsClientes.setAll(clientes);
 	}
+	
 	public void setListaVehiculo(List<Vehiculo> vehiculos) {
 		obsVehiculos.setAll(vehiculos);
 	}
+	
 	public void setListaAlquiler(List<Alquiler> alquileres) {
 		obsAlquileres.setAll(alquileres);
 	}
 	
-//	Reiniciar tablas y guardar
+	@FXML
+	private void initialize() {
+		
+//		INICIALIZAR TABLAS
+		
+		inicializarTClientes();
+		
+		inicializarTVehiculos();
+		
+		inicializarTAlquileres();
+	}
+	
+//	BOTONES REINICIAR TABLAS Y GUARDAR
+	
     @FXML
     private Button btnGuardar;
     
     @FXML
     private Button btnReiniciarTablas;
     
-//    Panel Cliente
+//    PANEL CLIENTES
+    
     @FXML
     private Button btnCBorrar;
     @FXML
@@ -114,9 +86,9 @@ public class ControladorEscenaPrincipal {
     private Button btnCModificar;
     @FXML
     private TextField tfCDni;
+        
+//    TABLA CLIENTES
     
-    
-//    Lista Clientes
     @FXML
     private TableView<Cliente> tvClientes;
     @FXML
@@ -128,8 +100,10 @@ public class ControladorEscenaPrincipal {
     
     private ObservableList<Cliente> obsClientes=FXCollections.observableArrayList();
     private ObservableList<Cliente> auxObsClientes=FXCollections.observableArrayList();
+
     
-//    Panel Vehículo
+//    PANEL VEHICULOS
+    
     @FXML
     private Button btnVBorrar;
     @FXML
@@ -138,9 +112,9 @@ public class ControladorEscenaPrincipal {
     private Button btnVMostrarEstadisticas;   
     @FXML
     private TextField tfVMatricula;
-
     
-//    Lista Vehículos
+//    TABLA VEHICULOS
+    
     @FXML
     private TableView<Vehiculo> tvVehiculos;
     @FXML
@@ -158,8 +132,10 @@ public class ControladorEscenaPrincipal {
     
     private ObservableList<Vehiculo> obsVehiculos=FXCollections.observableArrayList();
     private ObservableList<Vehiculo> auxObsVehiculos=FXCollections.observableArrayList();
+ 
     
-//    Panel Alquiler
+//    PANEL ALQUILERES
+    
     @FXML
     private Button btnABorrar;
     @FXML
@@ -169,10 +145,10 @@ public class ControladorEscenaPrincipal {
     @FXML
     private Button btnABuscar;
     @FXML
-    private DatePicker dpAFecha;
+    private DatePicker dpAFecha;  
     
+//  TABLA ALQUILERES
     
-//    Lista Alquileres    
     @FXML
     private TableColumn<Alquiler, String> tcACliente;
     @FXML
@@ -189,9 +165,8 @@ public class ControladorEscenaPrincipal {
     private ObservableList<Alquiler> obsAlquileres=FXCollections.observableArrayList();
     private ObservableList<Alquiler> auxObsAlquileres=FXCollections.observableArrayList();
     
-//    Buscar
+//    FUNCIÓN BUSCAR
     
-
     @FXML
     void buscarClientes(KeyEvent event) {
     	String filtroCliente=tfCDni.getText();
@@ -241,30 +216,9 @@ public class ControladorEscenaPrincipal {
 			}
     }
     
+//    FUNCIÓN INSERTAR
     
-//    Insertar
-    
-    private ControladorEscenaSecundaria lanzadorEscenaSecundaria(String accion,String titulo){
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("../vistas/EscenaSecundaria.fxml"));
-        ControladorEscenaSecundaria controlador=null;
-		try {
-	        Parent raiz;
-			raiz = loader.load();     
-	        controlador=loader.getController();
-	        controlador.setControladorMVC(controladorMVC);
-	        controlador.setAccion(accion);
-	        Scene escena=new Scene(raiz);
-	        
-	        Stage escenario=new Stage();
-	        escenario.initModality(Modality.APPLICATION_MODAL);
-	        escenario.setScene(escena);
-	        escenario.setTitle(titulo);
-	        escenario.showAndWait();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        return controlador;
-    }
+
     @FXML
     void insertarCliente(ActionEvent event) {
     	lanzadorEscenaSecundaria("Clientes", "Insertar cliente");
@@ -285,6 +239,9 @@ public class ControladorEscenaPrincipal {
     	restablecerTablas();
 
     }
+    
+//    FUNCIÓN BORRAR
+    
     @FXML
     void borrarAlquiler(ActionEvent event) {
     	Alquiler alquilerABorrar=tvAlquileres.getSelectionModel().getSelectedItem();
@@ -303,7 +260,6 @@ public class ControladorEscenaPrincipal {
     	
     }
     
-//    Borrar
     @FXML
     void borrarCliente(ActionEvent event) {
     	Cliente clienteABorrar=tvClientes.getSelectionModel().getSelectedItem();
@@ -339,7 +295,11 @@ public class ControladorEscenaPrincipal {
     	}
     	
     }
-
+    
+//    FUNCIONES SECUNDARIAS
+    
+//    CLIENTES
+    
     @FXML
     void modificarCliente(ActionEvent event) {
     	Cliente cliente=tvClientes.getSelectionModel().getSelectedItem();
@@ -372,6 +332,8 @@ public class ControladorEscenaPrincipal {
 
     }
     
+//    ALQUILERES
+    
     @FXML
     void devolverAlquiler(ActionEvent event) {
     	Alquiler alquiler=tvAlquileres.getSelectionModel().getSelectedItem();
@@ -402,31 +364,18 @@ public class ControladorEscenaPrincipal {
     	}
 
     }
+    
+//    VEHICULOS
+    
     @FXML
     void mostrarEstadisticas(ActionEvent event) {
     	lanzadorEscenaSecundaria("MostrarEstadisticas", "Mostrar estadisticas");
     }
-    private void restablecerTablas() {
-    	tfCDni.setText("");
-    	obsAlquileres.setAll(controladorMVC.getAlquileres());
-    	tvAlquileres.setItems(obsAlquileres);
-    	tvAlquileres.refresh();
-    	
-    	tfVMatricula.setText("");
-    	obsVehiculos.setAll(controladorMVC.getVehiculo());
-    	tvVehiculos.setItems(obsVehiculos);
-    	tvVehiculos.refresh();
-    	
-    	dpAFecha.setValue(null);
-    	obsClientes.setAll(controladorMVC.getClientes());
-    	tvClientes.setItems(obsClientes);
-    	tvClientes.refresh();
-    }
-    @FXML
-    void reiniciarTablas(ActionEvent event) {
-    	restablecerTablas();
-    }
 
+   
+
+//    LISTAR
+    
     @FXML
     void seleccionarAlquiler(MouseEvent event) {
 
@@ -486,15 +435,108 @@ public class ControladorEscenaPrincipal {
 		}
     }
 
-
-
-	private void actualizaTablaAlquileres(List<Alquiler> tablaAlquiler) {
-		obsAlquileres.setAll(tablaAlquiler);
-		tvAlquileres.setItems(obsAlquileres);
-	}
+//	GUARDAR Y REINICIAR TABLAS
 	
     @FXML
     void guardar(ActionEvent event) {
     	controladorMVC.guardar();
     }
+    @FXML
+    void reiniciarTablas(ActionEvent event) {
+    	restablecerTablas();
+    }
+    
+//    MÉTODOS CREADOS PARA REUTILIZAR Y CLARIFICAR CÓDIGO
+    
+	private void inicializarTAlquileres() {
+		tcAVehiculo.setCellValueFactory(alquiler -> new SimpleObjectProperty<String>(alquiler.getValue().getVehiculo().getMatricula()));
+		tcACliente.setCellValueFactory(alquiler -> new SimpleObjectProperty<String>(alquiler.getValue().getCliente().getDni()));
+		tcAFechaAlquiler.setCellValueFactory(alquiler-> new SimpleObjectProperty<>(alquiler.getValue().getFechaAlquiler()));
+		tcAFechaDevolucion.setCellValueFactory(alquiler-> new SimpleObjectProperty<>(alquiler.getValue().getFechaDevolucion()));
+		tcAPrecio.setCellValueFactory(alquiler->new SimpleObjectProperty<Integer>(alquiler.getValue().getPrecio()));
+		tvAlquileres.setItems(obsAlquileres);
+	}
+
+	private void inicializarTVehiculos() {
+		tcVMarca.setCellValueFactory(vehiculo ->new SimpleStringProperty(vehiculo.getValue().getMarca()));
+		tcVModelo.setCellValueFactory(vehiculo ->new SimpleStringProperty(vehiculo.getValue().getModelo()));
+		tcVMatricula.setCellValueFactory(vehiculo ->new SimpleStringProperty(vehiculo.getValue().getMatricula()));
+		tcVCilindrada.setCellValueFactory(vehiculo -> {
+		    if (vehiculo.getValue() instanceof Turismo) {
+		        return new SimpleIntegerProperty(((Turismo) vehiculo.getValue()).getCilindrada()).asObject();
+		    } else {
+		        return null;
+		    }
+		});
+		tcVPlazas.setCellValueFactory(vehiculo -> {
+		    if (vehiculo.getValue() instanceof Autobus) {
+		        return new SimpleIntegerProperty(((Autobus) vehiculo.getValue()).getPlazas()).asObject();
+		    }else if(vehiculo.getValue() instanceof Furgoneta) {
+		        return new SimpleIntegerProperty(((Furgoneta) vehiculo.getValue()).getPlazas()).asObject();
+		    }else {
+		        return null;
+		    }
+		});
+		tcVPma.setCellValueFactory(vehiculo -> {
+		    if (vehiculo.getValue() instanceof Furgoneta) {
+		        return new SimpleIntegerProperty(((Furgoneta) vehiculo.getValue()).getPma()).asObject();
+		    } else {
+		        return null;
+		    }
+		});
+
+		tvVehiculos.setItems(obsVehiculos);
+	}
+
+	private void inicializarTClientes() {
+		tcCNombre.setCellValueFactory(cliente ->new SimpleStringProperty(cliente.getValue().getNombre()));
+		tcCDni.setCellValueFactory(cliente->new SimpleStringProperty(cliente.getValue().getDni()));
+		tcCTelefono.setCellValueFactory(cliente->new SimpleStringProperty(cliente.getValue().getTelefono()));
+		tvClientes.setItems(obsClientes);
+	}
+	
+    private ControladorEscenaSecundaria lanzadorEscenaSecundaria(String accion,String titulo){
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("../vistas/EscenaSecundaria.fxml"));
+        ControladorEscenaSecundaria controlador=null;
+		try {
+	        Parent raiz;
+			raiz = loader.load();     
+	        controlador=loader.getController();
+	        controlador.setControladorMVC(controladorMVC);
+	        controlador.setAccion(accion);
+	        Scene escena=new Scene(raiz);
+	        
+	        Stage escenario=new Stage();
+	        escenario.initModality(Modality.APPLICATION_MODAL);
+	        escenario.setScene(escena);
+	        escenario.setTitle(titulo);
+	        escenario.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        return controlador;
+    }
+    
+    private void restablecerTablas() {
+    	tfCDni.setText("");
+    	obsAlquileres.setAll(controladorMVC.getAlquileres());
+    	tvAlquileres.setItems(obsAlquileres);
+    	tvAlquileres.refresh();
+    	
+    	tfVMatricula.setText("");
+    	obsVehiculos.setAll(controladorMVC.getVehiculo());
+    	tvVehiculos.setItems(obsVehiculos);
+    	tvVehiculos.refresh();
+    	
+    	dpAFecha.setValue(null);
+    	obsClientes.setAll(controladorMVC.getClientes());
+    	tvClientes.setItems(obsClientes);
+    	tvClientes.refresh();
+    }
+    
+    
+	private void actualizaTablaAlquileres(List<Alquiler> tablaAlquiler) {
+		obsAlquileres.setAll(tablaAlquiler);
+		tvAlquileres.setItems(obsAlquileres);
+	}
 }
